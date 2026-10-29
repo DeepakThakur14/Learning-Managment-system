@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | LearnHub</title>
+    <link rel="stylesheet" href="css/student.css">
+    <script src="js/student-module.js" defer></script>
+</head>
+<body>
+
+<header class="navbar">
+    <a href="student-dashboard.html" class="logo">
+        Learn<span>Hub</span>
+    </a>
+
+    <nav>
+        <a href="student-dashboard.html" class="active">Dashboard</a>
+        <a href="my-courses.html">My Courses</a>
+        <a href="progress.html">Progress</a>
+        <a href="assignments.html">Assignments</a>
+        <a href="certificates.html">Certificates</a>
+        <a href="profile.html">Profile</a>
+    </nav>
+
+    <a href="profile.html" class="user">
+        <div class="avatar">ST</div>
+        <span id="studentName">Student</span>
+    </a>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <div>
+            <h1>Welcome back, <span id="welcomeName">Student</span>!</h1>
+            <p>Continue your learning journey and achieve your goals.</p>
+        </div>
+
+        <a href="my-courses.html" class="btn">
+            Continue Learning
+        </a>
+    </section>
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <div class="icon blue">📚</div>
+            <div>
+                <h3 id="totalCourses">0</h3>
+                <p>Enrolled Courses</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon green">✓</div>
+            <div>
+                <h3 id="completedCourses">0</h3>
+                <p>Completed Courses</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon orange">◷</div>
+            <div>
+                <h3 id="averageProgress">0%</h3>
+                <p>Average Progress</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon purple">🏆</div>
+            <div>
+                <h3 id="totalCertificates">0</h3>
+                <p>Certificates</p>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="dashboard-grid">
+
+        <div class="card large-card">
+
+            <div class="card-header">
+                <h2>Continue Learning</h2>
+                <a href="my-courses.html">View All</a>
+            </div>
+
+            <div id="dashboardCourses">
+                <p class="empty-message">
+                    Your courses will appear here.
+                    Open My Courses to get started.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-header">
+                <h2>Quick Links</h2>
+            </div>
+
+            <div class="quick-links">
+                <a href="my-courses.html" class="quick-link">
+                    📚 <span>Explore My Courses</span>
+                </a>
+
+                <a href="assignments.html" class="quick-link">
+                    📝 <span>View Assignments</span>
+                </a>
+
+                <a href="progress.html" class="quick-link">
+                    📊 <span>Check Progress</span>
+                </a>
+
+                <a href="certificates.html" class="quick-link">
+                    🏆 <span>My Certificates</span>
+                </a>
+
+                <a href="profile.html" class="quick-link">
+                    👤 <span>Edit Profile</span>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="card recent-card">
+
+        <div class="card-header">
+            <h2>Recent Activity</h2>
+        </div>
+
+        <div id="recentActivity">
+            <p class="empty-message">
+                Your learning activity will appear here.
+            </p>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 LearnHub LMS. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

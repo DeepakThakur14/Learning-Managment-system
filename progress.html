@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Progress | Student LMS</title>
+    <link rel="stylesheet" href="css/student.css">
+    <script src="js/student-module.js" defer></script>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="container navbar">
+            <h2 class="logo">Student LMS</h2>
+
+            <nav class="nav-links">
+                <a href="student-dashboard.html">Dashboard</a>
+                <a href="my-courses.html">My Courses</a>
+                <a href="progress.html" class="active">Progress</a>
+                <a href="assignments.html">Assignments</a>
+                <a href="certificates.html">Certificates</a>
+                <a href="profile.html">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container page-content">
+        <section class="page-header">
+            <div>
+                <h1>My Learning Progress</h1>
+                <p>Track your course completion and learning activity.</p>
+            </div>
+        </section>
+
+        <!-- Overall Statistics -->
+        <section class="stats-grid">
+            <article class="stat-card">
+                <span class="stat-label">Total Courses</span>
+                <h2 id="progressTotalCourses">0</h2>
+                <p>Courses enrolled</p>
+            </article>
+
+            <article class="stat-card">
+                <span class="stat-label">Completed Courses</span>
+                <h2 id="progressCompletedCourses">0</h2>
+                <p>Courses finished</p>
+            </article>
+
+            <article class="stat-card">
+                <span class="stat-label">Average Progress</span>
+                <h2 id="progressAverage">0%</h2>
+                <p>Overall completion</p>
+            </article>
+
+            <article class="stat-card">
+                <span class="stat-label">Learning Status</span>
+                <h2 id="learningStatus">Getting Started</h2>
+                <p>Keep learning every day!</p>
+            </article>
+        </section>
+
+        <!-- Overall Progress -->
+        <section class="content-card">
+            <div class="section-heading">
+                <h2>Overall Completion</h2>
+                <span id="overallProgressText">0%</span>
+            </div>
+
+            <div
+                class="progress-track"
+                role="progressbar"
+                aria-label="Overall learning progress"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+                id="overallProgressBar"
+            >
+                <div
+                    class="progress-fill"
+                    id="overallProgressFill"
+                    style="width: 0%;"
+                ></div>
+            </div>
+
+            <p id="progressSummary">
+                Start a course to see your learning progress here.
+            </p>
+        </section>
+
+        <!-- Individual Course Progress -->
+        <section class="content-card">
+            <div class="section-heading">
+                <h2>Course-wise Progress</h2>
+            </div>
+
+            <div id="courseProgressList" class="course-progress-list">
+                <p class="empty-state">
+                    Loading your course progress...
+                </p>
+            </div>
+
+            <p id="progressMessage" class="message" aria-live="polite"></p>
+        </section>
+
+        <!-- Learning Tips -->
+        <section class="content-card">
+            <h2>Tips to Improve Your Progress</h2>
+
+            <div class="tips-grid">
+                <article class="tip-card">
+                    <h3>Set Daily Goals</h3>
+                    <p>Choose a small learning target and try to complete it daily.</p>
+                </article>
+
+                <article class="tip-card">
+                    <h3>Practice Regularly</h3>
+                    <p>Apply what you learn by completing exercises and assignments.</p>
+                </article>
+
+                <article class="tip-card">
+                    <h3>Stay Consistent</h3>
+                    <p>Regular study sessions can help you finish courses on time.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Student LMS. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

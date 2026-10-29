@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses | LearnHub</title>
+    <link rel="stylesheet" href="css/student.css">
+    <script src="js/student-module.js" defer></script>
+</head>
+<body>
+
+<header class="navbar">
+    <a href="student-dashboard.html" class="logo">
+        Learn<span>Hub</span>
+    </a>
+
+    <nav>
+        <a href="student-dashboard.html">Dashboard</a>
+        <a href="my-courses.html" class="active">My Courses</a>
+        <a href="progress.html">Progress</a>
+        <a href="assignments.html">Assignments</a>
+        <a href="certificates.html">Certificates</a>
+        <a href="profile.html">Profile</a>
+    </nav>
+
+    <a href="profile.html" class="user">
+        <div class="avatar">ST</div>
+        <span id="studentName">Student</span>
+    </a>
+</header>
+
+<main class="container">
+
+    <section class="page-heading">
+        <div>
+            <h1>My Courses</h1>
+            <p>Explore your courses and track your learning progress.</p>
+        </div>
+    </section>
+
+    <section class="course-toolbar">
+
+        <div class="search-box">
+            <span>🔍</span>
+            <input
+                type="search"
+                id="courseSearch"
+                placeholder="Search courses..."
+                aria-label="Search courses"
+            >
+        </div>
+
+        <select id="categoryFilter" aria-label="Filter by category">
+            <option value="all">All Categories</option>
+            <option value="web development">Web Development</option>
+            <option value="programming">Programming</option>
+            <option value="design">Design</option>
+            <option value="data science">Data Science</option>
+        </select>
+
+    </section>
+
+    <section class="filter-tabs" aria-label="Course status filters">
+        <button class="filter-btn active" data-filter="all" type="button">
+            All Courses
+        </button>
+
+        <button class="filter-btn" data-filter="in-progress" type="button">
+            In Progress
+        </button>
+
+        <button class="filter-btn" data-filter="completed" type="button">
+            Completed
+        </button>
+    </section>
+
+    <section class="course-summary">
+        <p id="courseCount">0 courses</p>
+    </section>
+
+    <section id="courseGrid" class="course-grid">
+        <p class="empty-message">Loading courses...</p>
+    </section>
+
+    <p id="courseMessage" class="message" role="status"></p>
+
+</main>
+
+<footer>
+    <p>© 2026 LearnHub LMS. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Student LMS</title>
+
+    <link rel="stylesheet" href="css/student.css">
+    <script src="js/student-module.js" defer></script>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="container navbar">
+            <h2 class="logo">Student LMS</h2>
+
+            <nav class="nav-links">
+                <a href="student-dashboard.html">Dashboard</a>
+                <a href="my-courses.html">My Courses</a>
+                <a href="progress.html">Progress</a>
+                <a href="assignments.html">Assignments</a>
+                <a href="certificates.html">Certificates</a>
+                <a href="profile.html" class="active">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container page-content">
+
+        <section class="page-header">
+            <div>
+                <h1>My Profile</h1>
+                <p>View and update your student information.</p>
+            </div>
+        </section>
+
+        <!-- Profile Summary -->
+        <section class="content-card profile-summary">
+            <div class="profile-avatar" id="profileAvatar" aria-hidden="true">
+                S
+            </div>
+
+            <div>
+                <h2 id="profileDisplayName">Student Name</h2>
+                <p id="profileDisplayEmail">student@example.com</p>
+                <span class="status-badge">Student</span>
+            </div>
+        </section>
+
+        <!-- Profile Form -->
+        <section class="content-card">
+            <h2>Personal Information</h2>
+
+            <form id="profileForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="profileName">Full Name</label>
+                        <input
+                            type="text"
+                            id="profileName"
+                            name="name"
+                            placeholder="Enter your full name"
+                            required
+                            maxlength="80"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profileEmail">Email Address</label>
+                        <input
+                            type="email"
+                            id="profileEmail"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                            maxlength="120"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profilePhone">Phone Number</label>
+                        <input
+                            type="tel"
+                            id="profilePhone"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                            maxlength="20"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profileEducation">Education</label>
+                        <input
+                            type="text"
+                            id="profileEducation"
+                            name="education"
+                            placeholder="e.g. BCA, B.Tech, Class 12"
+                            maxlength="100"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profileCity">City</label>
+                        <input
+                            type="text"
+                            id="profileCity"
+                            name="city"
+                            placeholder="Enter your city"
+                            maxlength="80"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profileCountry">Country</label>
+                        <input
+                            type="text"
+                            id="profileCountry"
+                            name="country"
+                            placeholder="Enter your country"
+                            maxlength="80"
+                        >
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="profileBio">About Me</label>
+                    <textarea
+                        id="profileBio"
+                        name="bio"
+                        rows="4"
+                        placeholder="Write a short introduction..."
+                        maxlength="500"
+                    ></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        Save Changes
+                    </button>
+
+                    <button
+                        type="reset"
+                        id="resetProfile"
+                        class="btn btn-secondary"
+                    >
+                        Reset Form
+                    </button>
+                </div>
+
+            </form>
+
+            <p id="profileMessage" class="message" aria-live="polite"></p>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Student LMS. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

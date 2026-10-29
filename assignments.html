@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments | Student LMS</title>
+
+    <link rel="stylesheet" href="css/student.css">
+    <script src="js/student-module.js" defer></script>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="container navbar">
+            <h2 class="logo">Student LMS</h2>
+
+            <nav class="nav-links">
+                <a href="student-dashboard.html">Dashboard</a>
+                <a href="my-courses.html">My Courses</a>
+                <a href="progress.html">Progress</a>
+                <a href="assignments.html" class="active">Assignments</a>
+                <a href="certificates.html">Certificates</a>
+                <a href="profile.html">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container page-content">
+
+        <section class="page-header">
+            <div>
+                <h1>My Assignments</h1>
+                <p>View your assignments and track your submissions.</p>
+            </div>
+        </section>
+
+        <!-- Assignment Statistics -->
+        <section class="stats-grid">
+
+            <article class="stat-card">
+                <span class="stat-label">Total Assignments</span>
+                <h2 id="totalAssignments">0</h2>
+                <p>All assignments</p>
+            </article>
+
+            <article class="stat-card">
+                <span class="stat-label">Pending</span>
+                <h2 id="pendingAssignments">0</h2>
+                <p>Awaiting submission</p>
+            </article>
+
+            <article class="stat-card">
+                <span class="stat-label">Submitted</span>
+                <h2 id="submittedAssignments">0</h2>
+                <p>Submitted assignments</p>
+            </article>
+
+            <article class="stat-card">
+                <span class="stat-label">Graded</span>
+                <h2 id="gradedAssignments">0</h2>
+                <p>Assignments reviewed</p>
+            </article>
+
+        </section>
+
+        <!-- Filters -->
+        <section class="content-card">
+            <div class="section-heading">
+                <h2>Assignment List</h2>
+
+                <select id="assignmentFilter" aria-label="Filter assignments">
+                    <option value="all">All Assignments</option>
+                    <option value="pending">Pending</option>
+                    <option value="submitted">Submitted</option>
+                    <option value="graded">Graded</option>
+                </select>
+            </div>
+
+            <div id="assignmentList" class="assignment-list">
+                <p class="empty-state">Loading assignments...</p>
+            </div>
+
+            <p id="assignmentMessage" class="message" aria-live="polite"></p>
+        </section>
+
+        <!-- Submission Form -->
+        <section class="content-card">
+            <h2>Submit an Assignment</h2>
+            <p>Select an assignment and enter your submission details.</p>
+
+            <form id="assignmentForm">
+
+                <div class="form-group">
+                    <label for="assignmentSelect">Select Assignment</label>
+                    <select id="assignmentSelect" name="assignmentId" required>
+                        <option value="">Choose an assignment</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="submissionText">Your Answer / Submission Link</label>
+                    <textarea
+                        id="submissionText"
+                        name="submissionText"
+                        rows="5"
+                        placeholder="Write your answer or paste your project link..."
+                        required
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Submit Assignment
+                </button>
+
+            </form>
+
+            <p id="submissionMessage" class="message" aria-live="polite"></p>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Student LMS. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
