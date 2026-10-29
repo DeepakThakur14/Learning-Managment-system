@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Lesson - LearnX</title>
+    <link rel="stylesheet" href="../../../CSS/admin.css">
+    <script src="../../../JS/learnx.js"></script>
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="logo">Learn<span>X</span></div>
+
+        <h3>Teacher Panel</h3>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="courses.html">My Courses</a>
+        <a href="add-lesson.html" class="active">Add Lesson</a>
+        <a href="performance.html">Student Performance</a>
+
+        <h3>Admin</h3>
+        <a href="../dashboard.html">Admin Dashboard</a>
+        <a href="../students.html">Manage Students</a>
+        <a href="../courses.html">Manage Courses</a>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <h1>Add New Lesson</h1>
+            <div class="user-info">Teacher Panel</div>
+        </div>
+
+        <section class="section">
+
+            <form id="addLessonForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="course">Select Course</label>
+
+                        <select id="course" required>
+                            <option value="">Select Course</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lessonNumber">Lesson Number</label>
+
+                        <input
+                            type="number"
+                            id="lessonNumber"
+                            placeholder="Enter lesson number"
+                            min="1"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="lessonTitle">Lesson Title</label>
+
+                        <input
+                            type="text"
+                            id="lessonTitle"
+                            placeholder="Enter lesson title"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="lessonDescription">Lesson Description</label>
+
+                        <textarea
+                            id="lessonDescription"
+                            placeholder="Enter lesson description"
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="videoUrl">Video URL</label>
+
+                        <input
+                            type="url"
+                            id="videoUrl"
+                            placeholder="Enter video URL"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lessonDocument">Lesson Document</label>
+
+                        <input
+                            type="file"
+                            id="lessonDocument"
+                            accept=".pdf,.doc,.docx,.ppt,.pptx"
+                        >
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        Save Lesson
+                    </button>
+
+                    <a href="courses.html" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+</div>
+
+</body>
+</html>

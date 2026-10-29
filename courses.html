@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses - LearnX</title>
+    <link rel="stylesheet" href="../../../CSS/admin.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="logo">Learn<span>X</span></div>
+
+        <h3>Teacher Panel</h3>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="courses.html" class="active">My Courses</a>
+        <a href="add-lesson.html">Add Lesson</a>
+        <a href="performance.html">Student Performance</a>
+
+        <h3>Admin</h3>
+        <a href="../dashboard.html">Admin Dashboard</a>
+        <a href="../students.html">Manage Students</a>
+        <a href="../courses.html">Manage Courses</a>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <h1>My Courses</h1>
+            <div class="user-info">Teacher Panel</div>
+        </div>
+
+        <section class="section">
+
+            <div class="section-header">
+                <h2>Courses Assigned to Me</h2>
+                <a href="add-lesson.html" class="btn btn-primary">
+                    + Add Lesson
+                </a>
+            </div>
+
+            <!-- Courses will be loaded using JavaScript -->
+            <div class="course-grid" id="courseGrid">
+                <p>Loading courses...</p>
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
+<script src="../../../JS/learnx.js"></script>
+
+</body>
+</html>

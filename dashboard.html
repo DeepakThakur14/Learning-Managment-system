@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - LearnX</title>
+    <link rel="stylesheet" href="../../../CSS/admin.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="logo">Learn<span>X</span></div>
+
+        <h3>Teacher Panel</h3>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="courses.html">My Courses</a>
+        <a href="add-lesson.html">Add Lesson</a>
+        <a href="performance.html">Student Performance</a>
+
+        <h3>Admin</h3>
+        <a href="../dashboard.html">Admin Dashboard</a>
+        <a href="../students.html">Manage Students</a>
+        <a href="../courses.html">Manage Courses</a>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <h1>Teacher Dashboard</h1>
+            <div class="user-info">Welcome, Teacher</div>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>My Courses</h3>
+                <h2>8</h2>
+                <p>Courses assigned to you</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Students</h3>
+                <h2>540</h2>
+                <p>Students enrolled</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Lessons</h3>
+                <h2>76</h2>
+                <p>Lessons uploaded</p>
+            </div>
+
+            <div class="card">
+                <h3>Average Rating</h3>
+                <h2>4.8</h2>
+                <p>Student feedback</p>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>Recent Course Activity</h2>
+                <a href="courses.html" class="btn btn-primary">View Courses</a>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Course</th>
+                        <th>New Students</th>
+                        <th>Lessons</th>
+                        <th>Status</th>
+                    </tr>
+
+                    <tr>
+                        <td>HTML & CSS Masterclass</td>
+                        <td>45</td>
+                        <td>12</td>
+                        <td><span class="badge badge-green">Active</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>JavaScript Basics</td>
+                        <td>32</td>
+                        <td>10</td>
+                        <td><span class="badge badge-green">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>Responsive Web Design</td>
+                        <td>28</td>
+                        <td>8</td>
+                        <td><span class="badge badge-yellow">Draft</span></td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+    <script src="../../../JS/learnx.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance - LearnX</title>
+    <link rel="stylesheet" href="../../../CSS/admin.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="logo">Learn<span>X</span></div>
+
+        <h3>Teacher Panel</h3>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="courses.html">My Courses</a>
+        <a href="add-lesson.html">Add Lesson</a>
+        <a href="performance.html" class="active">Student Performance</a>
+
+        <h3>Admin</h3>
+        <a href="../dashboard.html">Admin Dashboard</a>
+        <a href="../students.html">Manage Students</a>
+        <a href="../courses.html">Manage Courses</a>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <h1>Student Performance</h1>
+            <div class="user-info">Teacher Panel</div>
+        </div>
+
+        <section class="section">
+
+            <div class="section-header">
+                <h2>Performance Overview</h2>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Course</th>
+                        <th>Progress</th>
+                        <th>Assignments</th>
+                        <th>Performance</th>
+                    </tr>
+
+                    <tr>
+                        <td>Bharat Singh</td>
+                        <td>HTML & CSS</td>
+                        <td>
+                            <div class="progress-box">
+                                <div class="progress-info">
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 85%;"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>9/10</td>
+                        <td><span class="badge badge-green">Excellent</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>Rahul Sharma</td>
+                        <td>JavaScript Basics</td>
+                        <td>
+                            <div class="progress-box">
+                                <div class="progress-info">
+                                    <span>70%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 70%;"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>7/10</td>
+                        <td><span class="badge badge-yellow">Good</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>Priya Verma</td>
+                        <td>Responsive Design</td>
+                        <td>
+                            <div class="progress-box">
+                                <div class="progress-info">
+                                    <span>45%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>5/10</td>
+                        <td><span class="badge badge-red">Needs Improvement</span></td>
+                    </tr>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
+    <script src="../../../JS/learnx.js"></script>
+</body>
+</html>
