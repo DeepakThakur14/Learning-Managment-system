@@ -457,6 +457,17 @@
 
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
+                            <label for="adminCourseFormLevel" class="form-label fw-bold small">Course Level</label>
+                            <select class="form-select" id="adminCourseFormLevel" required>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
                             <label for="adminCourseFormInstructor" class="form-label fw-bold small">Instructor
                                 Name</label>
                             <input type="text" class="form-control" id="adminCourseFormInstructor" required
@@ -1033,17 +1044,27 @@
                         description: adminCourseFormDesc.value.trim()
                     };
 
-                    if (mode === "add") {
-                        const created = LMSStorage.addCourse(courseData);
-                        if (!created) return;
-                        LMSStorage.showToast("Course created and published successfully!", "success");
-                    } else {
-                        LMSStorage.updateCourse(adminCourseEditId.value, courseData);
-                        LMSStorage.showToast("Course updated successfully!", "success");
-                    }
+                    try {
+                        if (mode === "add") {
+                            const created = LMSStorage.addCourse(courseData);
+                            if (!created) return;
+                            LMSStorage.showToast("Course created and published successfully!", "success");
+                        } else {
+                            const updated = LMSStorage.updateCourse(adminCourseEditId.value, courseData);
+                            if (!updated) {
+                                LMSStorage.showToast("Course could not be updated.", "danger");
+                                return;
+                            }
+                            LMSStorage.showToast("Course updated successfully!", "success");
+                        }
 
-                    adminCourseModalBackdrop.classList.remove("active");
-                    refreshKPIs();
+                        adminCourseModalBackdrop.classList.remove("active");
+                        refreshKPIs();
+                        renderCoursesTable();
+                    } catch (error) {
+                        console.error("[LearnX] Admin course save failed:", error);
+                        LMSStorage.showToast(error.message || "Unable to save course. Please try again.", "danger");
+                    }
                 });
             }
 

@@ -3611,9 +3611,9 @@ const LMSStorage = {
         }
     },
 
-    addCourse: function (course) {
+    addCourse: function (course, instructorId) {
         if (typeof CourseService !== "undefined") {
-            return CourseService.createCourse(course);
+            return CourseService.createCourse(course, instructorId);
         }
     },
 

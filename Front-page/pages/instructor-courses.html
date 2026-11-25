@@ -185,6 +185,17 @@
 
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
+                            <label for="courseFormLevel" class="form-label fw-bold small">Course Level</label>
+                            <select class="form-select" id="courseFormLevel" required>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
                             <label for="courseFormDuration" class="form-label fw-bold small">Estimated Duration</label>
                             <input type="text" class="form-control" id="courseFormDuration" required placeholder="e.g. 24 hours">
                         </div>
@@ -521,20 +532,33 @@
                     description: courseFormDescription.value.trim()
                 };
 
-                if (mode === "create") {
-                    const currentInstructor = LMSStorage.getCurrentUser();
-                    courseData.instructor = currentInstructor.name;
-                    const created = LMSStorage.addCourse(courseData, currentInstructor.id);
-                    if (!created) return;
-                    LMSStorage.showToast("Course created successfully!", "success");
-                } else {
-                    const id = editCourseId.value;
-                    LMSStorage.updateCourse(id, courseData);
-                    LMSStorage.showToast("Course updated successfully!", "success");
-                }
+                try {
+                    if (mode === "create") {
+                        const currentInstructor = LMSStorage.getCurrentUser();
+                        if (!currentInstructor || currentInstructor.role !== "instructor") {
+                            LMSStorage.showToast("Only an instructor can create a course from this page.", "danger");
+                            return;
+                        }
+                        courseData.instructor = currentInstructor.name;
+                        const created = LMSStorage.addCourse(courseData, currentInstructor.id);
+                        if (!created) return;
+                        LMSStorage.showToast("Course created successfully!", "success");
+                    } else {
+                        const id = editCourseId.value;
+                        const updated = LMSStorage.updateCourse(id, courseData);
+                        if (!updated) {
+                            LMSStorage.showToast("Course could not be updated. Please check course ownership.", "danger");
+                            return;
+                        }
+                        LMSStorage.showToast("Course updated successfully!", "success");
+                    }
 
-                closeCourseModal();
-                renderCoursesTable();
+                    closeCourseModal();
+                    renderCoursesTable();
+                } catch (error) {
+                    console.error("[LearnX] Course save failed:", error);
+                    LMSStorage.showToast(error.message || "Unable to save course. Please try again.", "danger");
+                }
             });
 
             // Modal Functions: Add Lesson
