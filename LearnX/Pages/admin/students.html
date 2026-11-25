@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Students - LearnX</title>
+
+    <!-- Connect CSS -->
+    <link rel="stylesheet" href="../../CSS/admin.css">
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">Learn<span>X</span></div>
+
+            <h3>Admin Panel</h3>
+
+            <a href="dashboard.html">Dashboard</a>
+            <a href="students.html" class="active">Manage Students</a>
+            <a href="courses.html">Manage Courses</a>
+            <a href="add-course.html">Add Course</a>
+
+            <h3>Teacher</h3>
+
+            <a href="teacher/dashboard.html">Teacher Dashboard</a>
+            <a href="teacher/courses.html">Teacher Courses</a>
+            <a href="teacher/add-lesson.html">Add Lesson</a>
+            <a href="teacher/performance.html">Performance</a>
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+
+            <div class="topbar">
+                <h1>Manage Students</h1>
+
+                <div class="user-info">
+                    Admin Panel
+                </div>
+            </div>
+
+            <section class="section">
+
+                <div class="section-header">
+                    <h2>All Students</h2>
+
+                    <input
+                        type="text"
+                        id="studentSearch"
+                        placeholder="Search student..."
+                        aria-label="Search students"
+                        style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 7px;"
+                    >
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student Name</th>
+                                <th>Email</th>
+                                <th>Enrolled Course</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="studentsTableBody">
+
+                            <tr>
+                                <td>001</td>
+                                <td>Bharat Singh</td>
+                                <td>bharat@gmail.com</td>
+                                <td>HTML &amp; CSS</td>
+                                <td><span class="badge badge-green">Active</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>002</td>
+                                <td>Rahul Sharma</td>
+                                <td>rahul@gmail.com</td>
+                                <td>Java Programming</td>
+                                <td><span class="badge badge-green">Active</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>003</td>
+                                <td>Priya Verma</td>
+                                <td>priya@gmail.com</td>
+                                <td>Python Programming</td>
+                                <td><span class="badge badge-green">Active</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>004</td>
+                                <td>Aman Kumar</td>
+                                <td>aman@gmail.com</td>
+                                <td>Data Science</td>
+                                <td><span class="badge badge-yellow">Pending</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>005</td>
+                                <td>Anjali Singh</td>
+                                <td>anjali@gmail.com</td>
+                                <td>HTML &amp; CSS</td>
+                                <td><span class="badge badge-green">Active</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>006</td>
+                                <td>Rohit Kumar</td>
+                                <td>rohit@gmail.com</td>
+                                <td>Java Programming</td>
+                                <td><span class="badge badge-green">Active</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>007</td>
+                                <td>Neha Sharma</td>
+                                <td>neha@gmail.com</td>
+                                <td>Python Programming</td>
+                                <td><span class="badge badge-green">Active</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>008</td>
+                                <td>Arjun Verma</td>
+                                <td>arjun@gmail.com</td>
+                                <td>Data Science</td>
+                                <td><span class="badge badge-green">Active</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>009</td>
+                                <td>Pooja Singh</td>
+                                <td>pooja@gmail.com</td>
+                                <td>HTML &amp; CSS</td>
+                                <td><span class="badge badge-yellow">Pending</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>010</td>
+                                <td>Karan Kumar</td>
+                                <td>karan@gmail.com</td>
+                                <td>Java Programming</td>
+                                <td><span class="badge badge-green">Active</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>011</td>
+                                <td>Sneha Verma</td>
+                                <td>sneha@gmail.com</td>
+                                <td>Python Programming</td>
+                                <td><span class="badge badge-green">Active</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>012</td>
+                                <td>Aditya Sharma</td>
+                                <td>aditya@gmail.com</td>
+                                <td>Data Science</td>
+                                <td><span class="badge badge-green">Active</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-warning">View</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Connect JavaScript -->
+    <script src="../../JS/learnx.js"></script>
+
+</body>
+</html>

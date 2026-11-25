@@ -1,0 +1,414 @@
+
+/* =========================
+   Global Styles
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+    line-height: 1.6;
+}
+
+a {
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+
+/* =========================
+   Header and Navigation
+========================= */
+
+header {
+    background: #14213d;
+    color: white;
+    padding: 15px 5%;
+    text-align: center;
+}
+
+header h2 {
+    margin: 0 0 8px;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+nav a:hover {
+    background: #263957;
+    color: #8fe3df;
+}
+
+
+/* =========================
+   Main Content
+========================= */
+
+main {
+    width: 80%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+main > section {
+    background: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    line-height: 1.3;
+}
+
+p {
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================
+   Hero Section
+========================= */
+
+.hero {
+    background: #14213d;
+    color: white;
+    padding: 40px 10%;
+}
+
+.hero h1 {
+    font-size: 35px;
+    margin: 12px 0;
+}
+
+.hero h4 {
+    color: #8fe3df;
+    letter-spacing: 1px;
+}
+
+
+/* =========================
+   Skills and Course Grid
+========================= */
+
+.skills,
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.skill,
+.course-card {
+    background: #f8fafc;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    min-width: 0;
+}
+
+.skill {
+    text-align: center;
+}
+
+.course-card {
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(20, 33, 61, 0.12);
+}
+
+.course-card .content {
+    padding: 5px;
+}
+
+.course-card h3 {
+    overflow-wrap: anywhere;
+}
+
+.course-card[hidden] {
+    display: none !important;
+}
+
+
+/* =========================
+   Course Covers
+========================= */
+
+.cover {
+    background: #0f8b8d;
+    color: white;
+    padding: 30px 12px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+.python {
+    background: #315b91;
+}
+
+.sql {
+    background: #9a6b16;
+}
+
+.ml {
+    background: #8b3d60;
+}
+
+.java {
+    background: #e76f00;
+}
+
+.c {
+    background: #555;
+}
+
+
+/* =========================
+   Buttons
+========================= */
+
+.button {
+    background: #0f8b8d;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.button:hover {
+    background: #0b6f71;
+}
+
+.button:focus-visible,
+nav a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid #e9a23b;
+    outline-offset: 3px;
+}
+
+
+/* =========================
+   Course Search and Filters
+========================= */
+
+.learnx-course-tools {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+}
+
+.learnx-course-tools input,
+.learnx-course-tools select {
+    min-height: 42px;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    background: white;
+}
+
+.learnx-course-tools input {
+    flex: 1;
+    min-width: 200px;
+}
+
+.learnx-course-count {
+    color: #475569;
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+
+/* =========================
+   Lecture and Learning Progress
+========================= */
+
+.lecture,
+.lesson {
+    background: #f8fafc;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 6px;
+}
+
+.lesson {
+    border-left: 4px solid transparent;
+}
+
+.lesson h2 {
+    font-size: 22px;
+}
+
+.learnx-progress {
+    margin: 16px 0;
+    padding: 14px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.learnx-progress p {
+    margin: 0 0 8px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   Skills and Enrollment
+========================= */
+
+.enroll {
+    text-align: center;
+}
+
+.code-box {
+    font-size: 30px;
+    font-weight: bold;
+    color: #0f8b8d;
+}
+
+
+/* =========================
+   Footer
+========================= */
+
+footer {
+    background: #14213d;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+}
+
+
+/* =========================
+   Tablet Layout
+========================= */
+
+@media (max-width: 1000px) {
+    main {
+        width: 90%;
+    }
+
+    .skills,
+    .course-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+}
+
+
+/* =========================
+   Mobile Layout
+========================= */
+
+@media (max-width: 600px) {
+    header {
+        padding: 15px 10px;
+    }
+
+    nav {
+        gap: 5px;
+    }
+
+    nav a {
+        margin: 0;
+        padding: 8px;
+    }
+
+    main {
+        width: 92%;
+        margin: 20px auto;
+    }
+
+    main > section {
+        padding: 15px;
+    }
+
+    .hero {
+        padding: 25px 5%;
+    }
+
+    .hero h1 {
+        font-size: 26px;
+    }
+
+    .skills,
+    .course-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .learnx-course-tools {
+        flex-direction: column;
+    }
+
+    .learnx-course-tools input,
+    .learnx-course-tools select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .lesson h2 {
+        font-size: 19px;
+    }
+}
+
+
+/* =========================
+   Reduced Motion
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
