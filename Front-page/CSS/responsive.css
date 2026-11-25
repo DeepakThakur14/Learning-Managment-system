@@ -1,0 +1,120 @@
+/**
+ * LearnX LMS - Mobile & Tablet Responsive Stylesheet
+ * File: CSS/responsive.css
+ */
+
+/* Mobile Navigation Hamburger */
+.lms-mobile-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--lms-border, #e2e8f0);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--lms-text, #1e293b);
+}
+
+@media (max-width: 992px) {
+    .lms-learning-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .lms-dashboard-wrapper {
+        flex-direction: column;
+    }
+
+    .lms-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--lms-border);
+        padding: 16px;
+    }
+
+    .lms-sidebar-nav {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 8px;
+    }
+
+    .lms-sidebar-link {
+        white-space: nowrap;
+    }
+
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 30px !important;
+    }
+
+    .about-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hero-container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .lms-mobile-toggle {
+        display: inline-flex;
+    }
+
+    .nav-links,
+    .lms-nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--theme-card, #ffffff);
+        padding: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border-bottom: 1px solid var(--theme-border, #e2e8f0);
+    }
+
+    .nav-links.show,
+    .lms-nav-menu.show {
+        display: flex;
+    }
+
+    .module-grid,
+    .category-grid,
+    .steps {
+        grid-template-columns: 1fr !important;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    .lms-welcome-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 24px;
+    }
+
+    .lms-main-content {
+        padding: 16px;
+    }
+
+    .lms-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-page {
+        flex-direction: column !important;
+    }
+
+    .side-content {
+        display: none !important;
+    }
+
+    .auth-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 24px !important;
+    }
+}

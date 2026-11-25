@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | LearnX</title>
+
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- LearnX Stylesheets -->
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/lms.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body data-theme="light">
+
+    <!-- NAVBAR -->
+    <header class="lms-navbar">
+        <div class="lms-nav-container">
+            <a href="../home.html" class="lms-brand">
+                <img src="../assets/Images/Project logo.png" alt="LearnX Logo" onerror="this.outerHTML='<span>Learn<span>X</span></span>'">
+            </a>
+
+            <button class="lms-mobile-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+                ☰
+            </button>
+
+            <ul class="lms-nav-menu" id="mainNavLinks">
+                <li><a href="../home.html" class="lms-nav-link">Home</a></li>
+                <li><a href="courses.html" class="lms-nav-link">Courses</a></li>
+                <li><a href="student-dashboard.html" class="lms-nav-link active">Dashboard</a></li>
+                <li><a href="assignments.html" class="lms-nav-link">Assignments</a></li>
+                <li><a href="progress.html" class="lms-nav-link">Progress</a></li>
+                <li><a href="profile.html" class="lms-nav-link">Profile</a></li>
+            </ul>
+
+            <div class="lms-nav-actions">
+                <button id="themeToggleBtn" class="theme-toggle-btn" type="button" style="padding: 6px 14px; font-size: 13px;">
+                    🎨 Themes
+                </button>
+                <div class="nav-buttons">
+                    <a href="login.html" class="login-btn">Login</a>
+                    <a href="Signup.html" class="signup-btn">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- DASHBOARD CONTAINER -->
+    <div class="lms-dashboard-wrapper">
+
+        <!-- SIDEBAR -->
+        <aside class="lms-sidebar">
+            <div>
+                <div class="lms-sidebar-header">Student Menu</div>
+                <div class="lms-sidebar-nav">
+                    <a href="student-dashboard.html" class="lms-sidebar-link active">
+                        <i class="bi bi-grid-fill"></i> Overview
+                    </a>
+                    <a href="courses.html" class="lms-sidebar-link">
+                        <i class="bi bi-book"></i> Course Catalog
+                    </a>
+                    <a href="assignments.html" class="lms-sidebar-link">
+                        <i class="bi bi-journal-check"></i> Assignments
+                    </a>
+                    <a href="progress.html" class="lms-sidebar-link">
+                        <i class="bi bi-graph-up"></i> Progress &amp; Analytics
+                    </a>
+                    <a href="certificate.html" class="lms-sidebar-link">
+                        <i class="bi bi-award-fill"></i> Certificates
+                    </a>
+                    <a href="profile.html" class="lms-sidebar-link">
+                        <i class="bi bi-person-circle"></i> My Profile
+                    </a>
+                </div>
+
+                <div class="lms-sidebar-header mt-4">Switch Portal</div>
+                <div class="lms-sidebar-nav">
+                    <a href="instructor-dashboard.html" class="lms-sidebar-link">
+                        <i class="bi bi-person-workspace"></i> Instructor Portal
+                    </a>
+                    <a href="admin-dashboard.html" class="lms-sidebar-link">
+                        <i class="bi bi-shield-lock"></i> Admin Portal
+                    </a>
+                </div>
+            </div>
+
+            <!-- User quick card at bottom of sidebar -->
+            <div class="p-3 bg-light rounded mt-4 text-center">
+                <img src="" alt="Student Avatar" id="sidebarUserAvatar" class="rounded-circle mb-2" style="width: 48px; height: 48px; object-fit: cover;">
+                <h6 class="fw-bold mb-0" id="sidebarUserName">Student</h6>
+                <small class="text-muted d-block mb-2" id="sidebarUserRole">Student</small>
+                <button type="button" class="btn btn-sm btn-outline-danger w-100 lms-logout-action-btn">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <main class="lms-main-content">
+
+            <!-- Welcome Banner -->
+            <div class="lms-welcome-banner">
+                <div>
+                    <h1 id="welcomeUserGreeting">Welcome back, Student!</h1>
+                    <p>Continue your structured learning journey. You have upcoming assignments and active course modules.</p>
+                </div>
+                <a href="courses.html" class="lms-btn btn-light text-primary fw-bold" style="background:#fff; color:#4338ca !important;">
+                    Explore New Courses →
+                </a>
+            </div>
+
+            <!-- Stats KPI Cards -->
+            <div class="lms-stats-grid">
+                
+                <div class="lms-stat-card">
+                    <div class="lms-stat-icon blue">📚</div>
+                    <div class="lms-stat-info">
+                        <h3 id="statEnrolledCourses">0</h3>
+                        <p>Enrolled Courses</p>
+                    </div>
+                </div>
+
+                <div class="lms-stat-card">
+                    <div class="lms-stat-icon green">✓</div>
+                    <div class="lms-stat-info">
+                        <h3 id="statCompletedTopics">0</h3>
+                        <p>Completed Topics</p>
+                    </div>
+                </div>
+
+                <div class="lms-stat-card">
+                    <div class="lms-stat-icon" style="background: rgba(6, 182, 212, 0.12); color: #0891b2;">📖</div>
+                    <div class="lms-stat-info">
+                        <h3 id="statRemainingTopics">0</h3>
+                        <p>Remaining Topics</p>
+                    </div>
+                </div>
+
+                <div class="lms-stat-card">
+                    <div class="lms-stat-icon orange">📊</div>
+                    <div class="lms-stat-info">
+                        <h3 id="statOverallProgress">0%</h3>
+                        <p>Overall Progress</p>
+                    </div>
+                </div>
+
+                <div class="lms-stat-card">
+                    <div class="lms-stat-icon purple">📝</div>
+                    <div class="lms-stat-info">
+                        <h3 id="statPendingAssignments">0</h3>
+                        <p>Pending Tasks</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Chart & Deadlines Row -->
+            <div class="row g-4 mb-4">
+                
+                <!-- Learning Activity Chart -->
+                <div class="col-lg-8">
+                    <div class="lms-card h-100">
+                        <div class="lms-card-header">
+                            <div>
+                                <h2>Weekly Learning Activity</h2>
+                                <p class="text-muted small mb-0">Hours dedicated to watching video lessons and coding.</p>
+                            </div>
+                            <span class="badge bg-primary-subtle text-primary fw-bold">Past 7 Days</span>
+                        </div>
+                        <div style="height: 260px; position: relative;">
+                            <div id="noWeeklyActivityMsg" class="h-100 flex-column align-items-center justify-content-center text-center text-muted" style="display: none;">
+                                <i class="bi bi-clock-history fs-1 mb-2 opacity-50"></i>
+                                <p class="mb-0 fw-semibold text-secondary">No learning activity recorded yet.</p>
+                                <small class="text-muted">Start completing syllabus topics to track your daily study hours.</small>
+                            </div>
+                            <canvas id="weeklyActivityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Deadlines & Tasks -->
+                <div class="col-lg-4">
+                    <div class="lms-card mb-4">
+                        <div class="lms-card-header">
+                            <h2>Upcoming Tasks</h2>
+                            <a href="assignments.html" class="small fw-bold">View All</a>
+                        </div>
+                        <div class="d-flex flex-column gap-3" id="upcomingDeadlinesList">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Recent Activities Widget -->
+                    <div class="lms-card">
+                        <div class="lms-card-header">
+                            <h2>Recent Activity</h2>
+                            <span class="badge bg-secondary-subtle text-secondary small">Live</span>
+                        </div>
+                        <div class="d-flex flex-column gap-2" id="studentRecentActivitiesList">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Enrolled In-Progress Courses Grid -->
+            <div class="lms-card">
+                <div class="lms-card-header">
+                    <div>
+                        <h2>In-Progress Courses</h2>
+                        <p class="text-muted small mb-0">Jump back into your recent lectures.</p>
+                    </div>
+                    <a href="courses.html" class="lms-btn lms-btn-outline lms-btn-sm">Browse Catalog</a>
+                </div>
+
+                <div class="lms-courses-grid" id="enrolledCoursesGrid">
+                    <!-- Injected dynamically from data.js -->
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- THEME PANEL -->
+    <div class="theme-overlay" id="themeOverlay"></div>
+    <div class="theme-panel" id="themePanel" role="dialog" aria-modal="true">
+        <div class="theme-panel-header">
+            <div>
+                <span class="theme-panel-label">INTERFACE</span>
+                <h2>Theme Settings</h2>
+            </div>
+            <button id="closeThemePanel" type="button">✕</button>
+        </div>
+        <h3>Select Theme</h3>
+        <div class="theme-options">
+            <button type="button" class="theme-option" data-theme-choice="light">☀️ Light</button>
+            <button type="button" class="theme-option" data-theme-choice="dark">🌙 Dark</button>
+            <button type="button" class="theme-option" data-theme-choice="purple">🔮 Purple</button>
+            <button type="button" class="theme-option" data-theme-choice="ocean">🌊 Ocean</button>
+            <button type="button" class="theme-option" data-theme-choice="forest">🌲 Forest</button>
+            <button type="button" class="theme-option" data-theme-choice="rose">🌹 Rose</button>
+            <button type="button" class="theme-option" data-theme-choice="sunset">🌅 Sunset</button>
+            <button type="button" class="theme-option" data-theme-choice="midnight">🌌 Midnight</button>
+            <button type="button" class="theme-option" data-theme-choice="lavender">🪻 Lavender</button>
+            <button type="button" class="theme-option" data-theme-choice="mint">🍃 Mint</button>
+            <button type="button" class="theme-option" data-theme-choice="gold">⭐ Gold</button>
+            <button type="button" class="theme-option" data-theme-choice="neon">⚡ Neon</button>
+        </div>
+        <button type="button" id="resetTheme" class="reset-theme-btn">Reset Default</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/data.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/theme.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let weeklyChartInstance = null;
+
+            function renderDashboard() {
+                const user = LMSStorage.getCurrentUser();
+                if (!user || user.role !== "student") return;
+
+                // Update user presentation
+                document.getElementById("welcomeUserGreeting").textContent = `Welcome back, ${user.name.split(" ")[0]}!`;
+                document.getElementById("sidebarUserName").textContent = user.name;
+                document.getElementById("sidebarUserRole").textContent = (user.role || "student").toUpperCase();
+                document.getElementById("sidebarUserAvatar").src = user.avatar || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80";
+
+                // Pull real calculated metrics from AnalyticsService
+                const metrics = LMSStorage.getStudentMetrics(user.id);
+                if (!metrics) return;
+
+                // KPI counters
+                document.getElementById("statEnrolledCourses").textContent = metrics.enrolledCount;
+                if (document.getElementById("statCompletedTopics")) {
+                    document.getElementById("statCompletedTopics").textContent = metrics.completedTopicsCount !== undefined ? metrics.completedTopicsCount : metrics.completedLessonsCount;
+                }
+                if (document.getElementById("statCompletedLessons")) {
+                    document.getElementById("statCompletedLessons").textContent = metrics.completedTopicsCount !== undefined ? metrics.completedTopicsCount : metrics.completedLessonsCount;
+                }
+                if (document.getElementById("statRemainingTopics")) {
+                    document.getElementById("statRemainingTopics").textContent = metrics.remainingTopicsCount !== undefined ? metrics.remainingTopicsCount : Math.max(0, (metrics.totalTopicsCount || metrics.totalLessonsCount || 0) - (metrics.completedTopicsCount || 0));
+                }
+                document.getElementById("statOverallProgress").textContent = `${metrics.overallProgressPercentage}%`;
+                document.getElementById("statPendingAssignments").textContent = metrics.pendingAssignmentsCount;
+
+                // Render Upcoming Tasks
+                const deadlinesContainer = document.getElementById("upcomingDeadlinesList");
+                if (deadlinesContainer) {
+                    if (metrics.upcomingTasks.length === 0) {
+                        deadlinesContainer.innerHTML = `<p class="text-muted small text-center my-3">No pending tasks or deadlines!</p>`;
+                    } else {
+                        deadlinesContainer.innerHTML = metrics.upcomingTasks.map(asg => `
+                            <div class="p-3 border rounded bg-light">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="lms-badge lms-badge-pending">${asg.status}</span>
+                                    <small class="text-muted fw-bold">Due: ${asg.dueDate}</small>
+                                </div>
+                                <h6 class="fw-bold mb-1" style="font-size: 14px;">
+                                    <a href="assignments.html" class="text-dark text-decoration-none">${asg.title}</a>
+                                </h6>
+                                <small class="text-muted">${asg.courseTitle}</small>
+                            </div>
+                        `).join("");
+                    }
+                }
+
+                // Render Recent Activities
+                const activitiesContainer = document.getElementById("studentRecentActivitiesList");
+                if (activitiesContainer) {
+                    if (metrics.recentActivities.length === 0) {
+                        activitiesContainer.innerHTML = `<p class="text-muted small text-center my-2">No recent activity recorded.</p>`;
+                    } else {
+                        activitiesContainer.innerHTML = metrics.recentActivities.map(act => {
+                            const timeAgo = formatTimeAgo(act.timestamp);
+                            return `
+                                <div class="p-2 border-bottom d-flex align-items-start gap-2" style="font-size: 13px;">
+                                    <span class="text-primary mt-1">●</span>
+                                    <div class="flex-grow-1">
+                                        <div class="fw-semibold text-dark">${act.details}</div>
+                                        <small class="text-muted">${timeAgo}</small>
+                                    </div>
+                                </div>
+                            `;
+                        }).join("");
+                    }
+                }
+
+                // Render Enrolled In-Progress Courses
+                const enrolledGrid = document.getElementById("enrolledCoursesGrid");
+                if (enrolledGrid) {
+                    if (metrics.enrolledCourses.length === 0) {
+                        enrolledGrid.innerHTML = `
+                            <div class="col-12 text-center p-4">
+                                <p class="text-muted">You are not enrolled in any courses yet.</p>
+                                <a href="courses.html" class="lms-btn lms-btn-primary lms-btn-sm">Explore Catalog</a>
+                            </div>
+                        `;
+                    } else {
+                        enrolledGrid.innerHTML = metrics.enrolledCourses.map(course => {
+                            const prog = course.progress;
+                            return `
+                                <div class="lms-course-card">
+                                    <div class="lms-course-thumbnail-wrap">
+                                        <img src="${course.thumbnail}" alt="${course.title}" class="lms-course-thumbnail">
+                                        <span class="lms-course-badge">${course.category}</span>
+                                    </div>
+                                    <div class="lms-course-body">
+                                        <h3 class="lms-course-title">
+                                            <a href="learning.html?course=${course.id}">${course.title}</a>
+                                        </h3>
+                                        <p class="text-muted small mb-2">Instructor: ${course.instructor}</p>
+                                        
+                                        <div class="lms-progress-wrap">
+                                            <div class="lms-progress-label">
+                                                <span>Progress</span>
+                                                <span>${prog.percentage}% (${prog.completedCount}/${prog.totalCount} Lessons)</span>
+                                            </div>
+                                            <div class="lms-progress-bar">
+                                                <div class="lms-progress-fill" style="width: ${prog.percentage}%;"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="lms-course-actions mt-3">
+                                            <a href="learning.html?course=${course.id}" class="lms-btn lms-btn-primary lms-btn-sm lms-btn-block">
+                                                Continue Learning <i class="bi bi-play-circle"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join("");
+                    }
+                }
+
+                // Render or update Chart.js Weekly Learning Activity Chart
+                const chartCanvas = document.getElementById("weeklyActivityChart");
+                const noActivityMsg = document.getElementById("noWeeklyActivityMsg");
+                if (chartCanvas && typeof Chart !== "undefined") {
+                    const activityData = metrics.weeklyActivity;
+                    const hasActivity = activityData && activityData.totalHours > 0;
+
+                    if (!hasActivity) {
+                        chartCanvas.style.display = "none";
+                        if (noActivityMsg) noActivityMsg.style.display = "flex";
+                        if (weeklyChartInstance) {
+                            weeklyChartInstance.destroy();
+                            weeklyChartInstance = null;
+                        }
+                    } else {
+                        chartCanvas.style.display = "block";
+                        if (noActivityMsg) noActivityMsg.style.display = "none";
+
+                        if (weeklyChartInstance) {
+                            weeklyChartInstance.data.labels = activityData.labels;
+                            weeklyChartInstance.data.datasets[0].data = activityData.hours;
+                            weeklyChartInstance.update();
+                        } else {
+                            const ctx = chartCanvas.getContext("2d");
+                            weeklyChartInstance = new Chart(ctx, {
+                                type: "bar",
+                                data: {
+                                    labels: activityData.labels,
+                                    datasets: [{
+                                        label: "Hours Studied",
+                                        data: activityData.hours,
+                                        backgroundColor: "rgba(99, 102, 241, 0.75)",
+                                        borderColor: "#6366f1",
+                                        borderWidth: 1,
+                                        borderRadius: 6
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    plugins: {
+                                        legend: { display: false },
+                                        tooltip: {
+                                            callbacks: {
+                                                label: function (context) {
+                                                    return `${context.raw} hrs dedicated`;
+                                                }
+                                            }
+                                        }
+                                    },
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true,
+                                            title: { display: true, text: "Hours" }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            function formatTimeAgo(isoString) {
+                if (!isoString) return "Recently";
+                const diffMs = Date.now() - new Date(isoString).getTime();
+                const diffMins = Math.floor(diffMs / 60000);
+                if (diffMins < 1) return "Just now";
+                if (diffMins < 60) return `${diffMins}m ago`;
+                const diffHours = Math.floor(diffMins / 60);
+                if (diffHours < 24) return `${diffHours}h ago`;
+                const diffDays = Math.floor(diffHours / 24);
+                return `${diffDays}d ago`;
+            }
+
+            // Initial render
+            renderDashboard();
+
+            // Real-time Event-Driven Synchronization
+            if (typeof AppStorage !== "undefined") {
+                AppStorage.onDataChange(() => {
+                    renderDashboard();
+                });
+            }
+        });
+    </script>
+
+<script src="../JS/support-widget.js"></script></body>
+
+</html>

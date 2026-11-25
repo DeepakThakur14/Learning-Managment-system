@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | LearnX</title>
+
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- LearnX Stylesheets -->
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/lms.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .admin-nav-tab {
+            padding: 10px 20px;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--theme-muted, #64748b);
+            border: none;
+            background: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .admin-nav-tab.active {
+            color: #ef4444;
+            border-bottom-color: #ef4444;
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+
+    <!-- NAVBAR -->
+    <header class="lms-navbar">
+        <div class="lms-nav-container">
+            <a href="../home.html" class="lms-brand">
+                <img src="../assets/Images/Project logo.png" alt="LearnX Logo"
+                    onerror="this.outerHTML='<span>Learn<span>X</span></span>'">
+            </a>
+
+            <button class="lms-mobile-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+                ☰
+            </button>
+
+            <ul class="lms-nav-menu" id="mainNavLinks">
+                <li><a href="../home.html" class="lms-nav-link">Home</a></li>
+                <li><a href="courses.html" class="lms-nav-link">Catalog</a></li>
+                <li><a href="admin-dashboard.html" class="lms-nav-link active">Admin Panel</a></li>
+                <li><a href="instructor-dashboard.html" class="lms-nav-link">Instructor Portal</a></li>
+                <li><a href="student-dashboard.html" class="lms-nav-link">Student Portal</a></li>
+            </ul>
+
+            <div class="lms-nav-actions">
+                <span class="badge bg-danger rounded-pill px-3 py-2 fw-bold">🛡️ SYSTEM ADMIN</span>
+                <button id="themeToggleBtn" class="theme-toggle-btn" type="button"
+                    style="padding: 6px 14px; font-size: 13px;">
+                    🎨 Themes
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- DASHBOARD CONTAINER -->
+    <div class="lms-dashboard-wrapper">
+
+        <!-- SIDEBAR -->
+        <aside class="lms-sidebar">
+            <div>
+                <div class="lms-sidebar-header">Administration</div>
+                <div class="lms-sidebar-nav">
+                    <button type="button" class="lms-sidebar-link active border-0 text-start w-100 sidebar-tab-btn"
+                        data-target="view-overview">
+                        <i class="bi bi-speedometer2"></i> System Overview
+                    </button>
+                    <button type="button" class="lms-sidebar-link border-0 text-start w-100 sidebar-tab-btn"
+                        data-target="view-students">
+                        <i class="bi bi-people-fill"></i> Manage Students
+                    </button>
+                    <button type="button" class="lms-sidebar-link border-0 text-start w-100 sidebar-tab-btn"
+                        data-target="view-instructors">
+                        <i class="bi bi-person-video3"></i> Manage Instructors
+                    </button>
+                    <button type="button" class="lms-sidebar-link border-0 text-start w-100 sidebar-tab-btn"
+                        data-target="view-courses">
+                        <i class="bi bi-journals"></i> Manage Courses
+                    </button>
+                </div>
+
+                <div class="lms-sidebar-header mt-4">Switch Views</div>
+                <div class="lms-sidebar-nav">
+                    <a href="student-dashboard.html" class="lms-sidebar-link">
+                        <i class="bi bi-mortarboard"></i> Student Portal
+                    </a>
+                    <a href="instructor-dashboard.html" class="lms-sidebar-link">
+                        <i class="bi bi-person-workspace"></i> Instructor Portal
+                    </a>
+                </div>
+
+                <div class="mt-4 pt-3 border-top">
+                    <button type="button" class="btn btn-sm btn-outline-danger w-100 lms-logout-action-btn">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="lms-main-content">
+
+            <!-- TAB 1: SYSTEM OVERVIEW -->
+            <section id="view-overview" class="admin-view-panel">
+
+                <div class="lms-welcome-banner" style="background: linear-gradient(135deg, #b91c1c, #991b1b);">
+                    <div>
+                        <h1>LearnX Administration Hub</h1>
+                        <p>Complete control over users, instructors, course publications, and enterprise learning
+                            metrics.</p>
+                    </div>
+                    <span class="badge bg-white text-danger fs-6 px-3 py-2">Platform Status: Healthy</span>
+                </div>
+
+                <!-- KPI Stats Grid -->
+                <div class="lms-stats-grid">
+                    <div class="lms-stat-card">
+                        <div class="lms-stat-icon blue">👥</div>
+                        <div class="lms-stat-info">
+                            <h3 id="statAdminStudents">10</h3>
+                            <p>Total Registered Students</p>
+                        </div>
+                    </div>
+
+                    <div class="lms-stat-card">
+                        <div class="lms-stat-icon green">👨‍🏫</div>
+                        <div class="lms-stat-info">
+                            <h3 id="statAdminInstructors">5</h3>
+                            <p>Active Instructors</p>
+                        </div>
+                    </div>
+
+                    <div class="lms-stat-card">
+                        <div class="lms-stat-icon purple">📚</div>
+                        <div class="lms-stat-info">
+                            <h3 id="statAdminCourses">10</h3>
+                            <p>Published Courses</p>
+                        </div>
+                    </div>
+
+                    <div class="lms-stat-card">
+                        <div class="lms-stat-icon orange">🏆</div>
+                        <div class="lms-stat-info">
+                            <h3 id="statAdminCompletionRate">74%</h3>
+                            <p>Platform Completion Rate</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-8">
+                        <div class="lms-card h-100">
+                            <div class="lms-card-header">
+                                <h2>Platform Learner Registrations</h2>
+                                <span class="badge bg-light text-dark">Monthly New Signups</span>
+                            </div>
+                            <div style="height: 250px; position: relative;">
+                                <canvas id="adminRegistrationsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="lms-card h-100">
+                            <div class="lms-card-header">
+                                <h2>Catalog Domain Distribution</h2>
+                            </div>
+                            <div style="height: 250px; position: relative;">
+                                <canvas id="adminCategoryDistributionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- TAB 2: MANAGE STUDENTS -->
+            <section id="view-students" class="admin-view-panel" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                    <div>
+                        <h2 class="fw-bold fs-4 mb-1" style="color: var(--theme-text);">Student Management</h2>
+                        <p class="text-muted small mb-0">Search, add, edit, or delete student accounts and enrollment
+                            status.</p>
+                    </div>
+                    <button type="button" class="lms-btn lms-btn-primary" id="openAddStudentModalBtn">
+                        <i class="bi bi-person-plus-fill"></i> Add Student
+                    </button>
+                </div>
+
+                <div class="lms-card">
+                    <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <input type="search" id="studentSearchInput" class="form-control" style="max-width: 320px;"
+                            placeholder="Search students by name, email, or ID...">
+                        <span class="text-muted small" id="studentsCountText">Showing 10 students</span>
+                    </div>
+
+                    <div class="lms-table-responsive">
+                        <table class="lms-table">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Email</th>
+                                    <th>Enrolled Courses</th>
+                                    <th>Learning Progress</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminStudentsTableBody">
+                                <!-- Injected dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: MANAGE INSTRUCTORS -->
+            <section id="view-instructors" class="admin-view-panel" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                    <div>
+                        <h2 class="fw-bold fs-4 mb-1" style="color: var(--theme-text);">Instructor Management</h2>
+                        <p class="text-muted small mb-0">Manage teaching faculty, credentials, ratings, and course
+                            assignments.</p>
+                    </div>
+                    <button type="button" class="lms-btn lms-btn-primary" id="openAddInstructorModalBtn">
+                        <i class="bi bi-person-plus"></i> Add Instructor
+                    </button>
+                </div>
+
+                <div class="lms-card">
+                    <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <input type="search" id="instructorSearchInput" class="form-control" style="max-width: 320px;"
+                            placeholder="Search instructors...">
+                        <span class="text-muted small" id="instructorsCountText">Showing 5 instructors</span>
+                    </div>
+
+                    <div class="lms-table-responsive">
+                        <table class="lms-table">
+                            <thead>
+                                <tr>
+                                    <th>Instructor</th>
+                                    <th>Title &amp; Specialization</th>
+                                    <th>Courses</th>
+                                    <th>Rating</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminInstructorsTableBody">
+                                <!-- Injected dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: MANAGE COURSES -->
+            <section id="view-courses" class="admin-view-panel" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                    <div>
+                        <h2 class="fw-bold fs-4 mb-1" style="color: var(--theme-text);">Course Management</h2>
+                        <p class="text-muted small mb-0">Platform-wide course catalog administration and publishing.</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="lms-btn lms-btn-primary" id="openAdminAddCourseModalBtn">
+                            <i class="bi bi-plus-circle"></i> Add Course
+                        </button>
+                        <a href="instructor-courses.html" class="lms-btn lms-btn-outline">
+                            <i class="bi bi-collection-play"></i> Full Studio
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lms-card">
+                    <div class="row g-3 align-items-center p-3 border-bottom">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">🔍</span>
+                                <input type="search" id="adminCourseSearchInput" class="form-control border-start-0"
+                                    placeholder="Filter courses by title, category, instructor...">
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-md-end text-muted small" id="adminCoursesCountText">
+                            Showing courses
+                        </div>
+                    </div>
+
+                    <div class="lms-table-responsive">
+                        <table class="lms-table">
+                            <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Category</th>
+                                    <th>Instructor</th>
+                                    <th>Level</th>
+                                    <th>Enrolled</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminCoursesTableBody">
+                                <!-- Injected dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- ADD / EDIT STUDENT MODAL -->
+    <div class="lms-modal-backdrop" id="studentModalBackdrop">
+        <div class="lms-modal" role="dialog" aria-modal="true">
+            <div class="lms-modal-header">
+                <h3 id="studentModalTitle">Add New Student</h3>
+                <button type="button" class="lms-modal-close" id="closeStudentModalBtn">✕</button>
+            </div>
+            <form id="studentModalForm">
+                <input type="hidden" id="studentFormMode" value="add">
+                <input type="hidden" id="studentEditId" value="">
+
+                <div class="lms-modal-body">
+                    <div class="mb-3">
+                        <label for="studentFormName" class="form-label fw-bold small">Full Name</label>
+                        <input type="text" class="form-control" id="studentFormName" required
+                            placeholder="e.g. John Doe">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="studentFormEmail" class="form-label fw-bold small">Email Address</label>
+                        <input type="email" class="form-control" id="studentFormEmail" required
+                            placeholder="john.doe@example.com">
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="studentFormStatus" class="form-label fw-bold small">Account Status</label>
+                            <select class="form-select" id="studentFormStatus">
+                                <option value="Active">Active</option>
+                                <option value="Suspended">Suspended</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="studentFormProgress" class="form-label fw-bold small">Progress %</label>
+                            <input type="number" class="form-control" id="studentFormProgress" min="0" max="100"
+                                value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lms-modal-footer">
+                    <button type="button" class="lms-btn lms-btn-outline" id="cancelStudentModalBtn">Cancel</button>
+                    <button type="submit" class="lms-btn lms-btn-primary">Save Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD / EDIT INSTRUCTOR MODAL -->
+    <div class="lms-modal-backdrop" id="instructorModalBackdrop">
+        <div class="lms-modal" role="dialog" aria-modal="true">
+            <div class="lms-modal-header">
+                <h3 id="instructorModalTitle">Add New Instructor</h3>
+                <button type="button" class="lms-modal-close" id="closeInstructorModalBtn">✕</button>
+            </div>
+            <form id="instructorModalForm">
+                <input type="hidden" id="instructorFormMode" value="add">
+                <input type="hidden" id="instructorEditId" value="">
+
+                <div class="lms-modal-body">
+                    <div class="mb-3">
+                        <label for="instructorFormName" class="form-label fw-bold small">Full Name</label>
+                        <input type="text" class="form-control" id="instructorFormName" required
+                            placeholder="e.g. Dr. Jane Smith">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="instructorFormEmail" class="form-label fw-bold small">Email</label>
+                        <input type="email" class="form-control" id="instructorFormEmail" required
+                            placeholder="jane.smith@learnx.edu">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="instructorFormTitle" class="form-label fw-bold small">Professional Title /
+                            Role</label>
+                        <input type="text" class="form-control" id="instructorFormTitle" required
+                            placeholder="e.g. Frontend Web Development Instructor">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="instructorFormBio" class="form-label fw-bold small">Bio &amp; Qualifications</label>
+                        <textarea class="form-control" id="instructorFormBio" rows="3" required
+                            placeholder="Industry experience, research background..."></textarea>
+                    </div>
+                </div>
+
+                <div class="lms-modal-footer">
+                    <button type="button" class="lms-btn lms-btn-outline" id="cancelInstructorModalBtn">Cancel</button>
+                    <button type="submit" class="lms-btn lms-btn-primary">Save Instructor</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD / EDIT COURSE MODAL (ADMIN) -->
+    <div class="lms-modal-backdrop" id="adminCourseModalBackdrop">
+        <div class="lms-modal" role="dialog" aria-modal="true">
+            <div class="lms-modal-header">
+                <h3 id="adminCourseModalTitle">Add New Course</h3>
+                <button type="button" class="lms-modal-close" id="closeAdminCourseModalBtn">✕</button>
+            </div>
+            <form id="adminCourseModalForm">
+                <input type="hidden" id="adminCourseFormMode" value="add">
+                <input type="hidden" id="adminCourseEditId" value="">
+
+                <div class="lms-modal-body">
+                    <div class="mb-3">
+                        <label for="adminCourseFormTitle" class="form-label fw-bold small">Course Title</label>
+                        <input type="text" class="form-control" id="adminCourseFormTitle" required
+                            placeholder="e.g. Cloud Infrastructure & DevOps">
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="adminCourseFormCategory" class="form-label fw-bold small">Category</label>
+                            <select class="form-select" id="adminCourseFormCategory" required>
+                                <option value="Web Development">Web Development</option>
+                                <option value="HTML">HTML</option>
+                                <option value="CSS">CSS</option>
+                                <option value="Responsive Design">Responsive Design</option>
+                                <option value="JavaScript">JavaScript</option>
+                                <option value="JavaScript & APIs">JavaScript &amp; APIs</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="adminCourseFormInstructor" class="form-label fw-bold small">Instructor
+                                Name</label>
+                            <input type="text" class="form-control" id="adminCourseFormInstructor" required
+                                placeholder="Enter instructor name">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="adminCourseFormDuration" class="form-label fw-bold small">Duration</label>
+                            <input type="text" class="form-control" id="adminCourseFormDuration" required
+                                placeholder="e.g. 24 hours">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="adminCourseFormThumbnail" class="form-label fw-bold small">Thumbnail Image
+                            URL</label>
+                        <input type="url" class="form-control" id="adminCourseFormThumbnail"
+                            placeholder="https://images.unsplash.com/...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="adminCourseFormDesc" class="form-label fw-bold small">Course Description</label>
+                        <textarea class="form-control" id="adminCourseFormDesc" rows="3" required
+                            placeholder="Comprehensive description of topics covered..."></textarea>
+                    </div>
+                </div>
+
+                <div class="lms-modal-footer">
+                    <button type="button" class="lms-btn lms-btn-outline" id="cancelAdminCourseModalBtn">Cancel</button>
+                    <button type="submit" class="lms-btn lms-btn-primary">Save Course</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- THEME PANEL -->
+    <div class="theme-overlay" id="themeOverlay"></div>
+    <div class="theme-panel" id="themePanel" role="dialog" aria-modal="true">
+        <div class="theme-panel-header">
+            <div>
+                <span class="theme-panel-label">INTERFACE</span>
+                <h2>Theme Settings</h2>
+            </div>
+            <button id="closeThemePanel" type="button">✕</button>
+        </div>
+        <h3>Select Theme</h3>
+        <div class="theme-options">
+            <button type="button" class="theme-option" data-theme-choice="light">☀️ Light</button>
+            <button type="button" class="theme-option" data-theme-choice="dark">🌙 Dark</button>
+            <button type="button" class="theme-option" data-theme-choice="purple">🔮 Purple</button>
+            <button type="button" class="theme-option" data-theme-choice="ocean">🌊 Ocean</button>
+            <button type="button" class="theme-option" data-theme-choice="forest">🌲 Forest</button>
+            <button type="button" class="theme-option" data-theme-choice="rose">🌹 Rose</button>
+            <button type="button" class="theme-option" data-theme-choice="sunset">🌅 Sunset</button>
+            <button type="button" class="theme-option" data-theme-choice="midnight">🌌 Midnight</button>
+            <button type="button" class="theme-option" data-theme-choice="lavender">🪻 Lavender</button>
+            <button type="button" class="theme-option" data-theme-choice="mint">🍃 Mint</button>
+            <button type="button" class="theme-option" data-theme-choice="gold">⭐ Gold</button>
+            <button type="button" class="theme-option" data-theme-choice="neon">⚡ Neon</button>
+        </div>
+        <button type="button" id="resetTheme" class="reset-theme-btn">Reset Default</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/data.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/admin-enhancements.js"></script>
+    <script src="../JS/theme.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Sidebar tab switching
+            document.querySelectorAll(".sidebar-tab-btn").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    document.querySelectorAll(".sidebar-tab-btn").forEach(b => b.classList.remove("active"));
+                    document.querySelectorAll(".admin-view-panel").forEach(p => p.style.display = "none");
+                    this.classList.add("active");
+                    const target = this.getAttribute("data-target");
+                    const panel = document.getElementById(target);
+                    if (panel) panel.style.display = "block";
+                    // Re-render the relevant table so data is always fresh
+                    if (target === "adminStudentsView") renderStudentsTable();
+                    else if (target === "adminInstructorsView") renderInstructorsTable();
+                    else if (target === "adminCoursesView") renderCoursesTable();
+                    else if (target === "adminOverviewView") refreshKPIs();
+                });
+            });
+
+            let regChartInstance = null;
+            let catChartInstance = null;
+
+            // Refresh KPI Stats & Charts dynamically
+            function refreshKPIs() {
+                const metrics = LMSStorage.getAdminMetrics();
+                if (!metrics) return;
+
+                document.getElementById("statAdminStudents").textContent = metrics.totalStudents;
+                document.getElementById("statAdminInstructors").textContent = metrics.totalInstructors;
+                document.getElementById("statAdminCourses").textContent = metrics.totalCourses;
+
+                // Real platform completion rate calculation
+                const completions = typeof ProgressService !== "undefined" ? ProgressService.getAllCompletions() : [];
+                const enrollments = typeof EnrollmentService !== "undefined" ? EnrollmentService.getAllEnrollments() : [];
+                const courses = LMSStorage.getCourses();
+                let totalPossibleLessons = 0;
+                enrollments.forEach(e => {
+                    const c = courses.find(cr => cr.id === e.courseId);
+                    if (c && c.curriculum) {
+                        c.curriculum.forEach(m => { if (m.lessons) totalPossibleLessons += m.lessons.length; });
+                    }
+                });
+                const completionRate = totalPossibleLessons > 0 ? Math.round((completions.length / totalPossibleLessons) * 100) : 0;
+                const completionRateEl = document.getElementById("statAdminCompletionRate");
+                if (completionRateEl) {
+                    completionRateEl.textContent = `${completionRate}%`;
+                }
+
+                // Render dynamic charts
+                renderAdminCharts(metrics);
+
+                renderStudentsTable();
+                renderInstructorsTable();
+                renderCoursesTable();
+            }
+
+            function renderAdminCharts(metrics) {
+                // Chart 1: Dynamic User Registrations Trend
+                const regCanvas = document.getElementById("adminRegistrationsChart");
+                if (regCanvas && typeof Chart !== "undefined") {
+                    const trend = metrics.registrationTrends;
+                    if (regChartInstance) {
+                        regChartInstance.data.labels = trend.labels;
+                        regChartInstance.data.datasets[0].data = trend.data;
+                        regChartInstance.update();
+                    } else {
+                        const ctx = regCanvas.getContext("2d");
+                        regChartInstance = new Chart(ctx, {
+                            type: "bar",
+                            data: {
+                                labels: trend.labels,
+                                datasets: [{
+                                    label: "New User Registrations",
+                                    data: trend.data,
+                                    backgroundColor: "#ef4444",
+                                    borderRadius: 6
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: { display: false },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: (ctx) => `${ctx.raw} new signups`
+                                        }
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: { precision: 0 }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+
+                // Chart 2: Dynamic Category Distribution
+                const catCanvas = document.getElementById("adminCategoryDistributionChart");
+                if (catCanvas && typeof Chart !== "undefined") {
+                    const catDist = metrics.categoryDistribution;
+                    const colors = ["#6366f1", "#f59e0b", "#ef4444", "#10b981", "#06b6d4", "#8b5cf6", "#ec4899"];
+
+                    if (catChartInstance) {
+                        catChartInstance.data.labels = catDist.labels;
+                        catChartInstance.data.datasets[0].data = catDist.data;
+                        catChartInstance.update();
+                    } else {
+                        const ctx = catCanvas.getContext("2d");
+                        catChartInstance = new Chart(ctx, {
+                            type: "pie",
+                            data: {
+                                labels: catDist.labels.length > 0 ? catDist.labels : ["None"],
+                                datasets: [{
+                                    data: catDist.data.length > 0 ? catDist.data : [1],
+                                    backgroundColor: colors.slice(0, catDist.labels.length || 1)
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: { legend: { position: "bottom", labels: { boxWidth: 10, font: { size: 10 } } } }
+                            }
+                        });
+                    }
+                }
+            }
+
+            // ---------------- Students Table & CRUD ----------------
+            const studentsTableBody = document.getElementById("adminStudentsTableBody");
+            const studentSearchInput = document.getElementById("studentSearchInput");
+            const studentModalBackdrop = document.getElementById("studentModalBackdrop");
+            const openAddStudentModalBtn = document.getElementById("openAddStudentModalBtn");
+            const closeStudentModalBtn = document.getElementById("closeStudentModalBtn");
+            const cancelStudentModalBtn = document.getElementById("cancelStudentModalBtn");
+            const studentModalForm = document.getElementById("studentModalForm");
+            const studentModalTitle = document.getElementById("studentModalTitle");
+            const studentFormMode = document.getElementById("studentFormMode");
+            const studentEditId = document.getElementById("studentEditId");
+            const studentFormName = document.getElementById("studentFormName");
+            const studentFormEmail = document.getElementById("studentFormEmail");
+            const studentFormStatus = document.getElementById("studentFormStatus");
+            const studentFormProgress = document.getElementById("studentFormProgress");
+
+            function renderStudentsTable() {
+                const query = studentSearchInput.value.trim().toLowerCase();
+                let students = LMSStorage.getStudents();
+
+                if (query) {
+                    students = students.filter(s =>
+                        s.name.toLowerCase().includes(query) ||
+                        s.email.toLowerCase().includes(query) ||
+                        s.id.toLowerCase().includes(query)
+                    );
+                }
+
+                document.getElementById("studentsCountText").textContent = `Showing ${students.length} students`;
+
+                studentsTableBody.innerHTML = students.map(s => `
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="${s.avatar}" class="rounded-circle" style="width: 34px; height: 34px; object-fit: cover;">
+                                <div>
+                                    <strong style="font-size: 14px;">${s.name}</strong>
+                                    <div class="text-muted small">${s.id}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-muted small">${s.email}</td>
+                        <td><span class="badge bg-light text-dark">${s.enrolledCourses ? s.enrolledCourses.length : 0} Courses</span></td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2" style="max-width: 140px;">
+                                <div class="progress flex-grow-1" style="height: 6px;">
+                                    <div class="progress-bar bg-success" style="width: ${s.progress || 0}%;"></div>
+                                </div>
+                                <span class="small fw-bold">${s.progress || 0}%</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge ${s.status === 'Active' ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'}">${s.status || 'Active'}</span>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button type="button" class="btn btn-sm btn-outline-secondary edit-student-btn" data-id="${s.id}">Edit</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger delete-student-btn" data-id="${s.id}">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join("");
+
+                studentsTableBody.querySelectorAll(".edit-student-btn").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const id = this.getAttribute("data-id");
+                        const s = LMSStorage.getStudents().find(x => x.id === id);
+                        if (!s) return;
+                        studentModalTitle.textContent = "Edit Student";
+                        studentFormMode.value = "edit";
+                        studentEditId.value = s.id;
+                        studentFormName.value = s.name;
+                        studentFormEmail.value = s.email;
+                        studentFormStatus.value = s.status || "Active";
+                        studentFormProgress.value = s.progress || 0;
+                        studentModalBackdrop.classList.add("active");
+                    });
+                });
+
+                studentsTableBody.querySelectorAll(".delete-student-btn").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const id = this.getAttribute("data-id");
+                        if (confirm("Are you sure you want to delete this student?")) {
+                            LMSStorage.deleteStudent(id);
+                            LMSStorage.showToast("Student deleted.", "success");
+                            refreshKPIs();
+                        }
+                    });
+                });
+            }
+
+            studentSearchInput.addEventListener("input", renderStudentsTable);
+
+            openAddStudentModalBtn.addEventListener("click", function () {
+                studentModalTitle.textContent = "Add New Student";
+                studentFormMode.value = "add";
+                studentEditId.value = "";
+                studentModalForm.reset();
+                studentModalBackdrop.classList.add("active");
+            });
+
+            closeStudentModalBtn.addEventListener("click", () => studentModalBackdrop.classList.remove("active"));
+            cancelStudentModalBtn.addEventListener("click", () => studentModalBackdrop.classList.remove("active"));
+
+            studentModalForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const mode = studentFormMode.value;
+                const studentData = {
+                    name: studentFormName.value.trim(),
+                    email: studentFormEmail.value.trim(),
+                    status: studentFormStatus.value,
+                    progress: parseInt(studentFormProgress.value) || 0
+                };
+
+                if (mode === "add") {
+                    LMSStorage.addStudent(studentData);
+                    LMSStorage.showToast("Student added successfully!", "success");
+                } else {
+                    LMSStorage.updateStudent(studentEditId.value, studentData);
+                    LMSStorage.showToast("Student updated successfully!", "success");
+                }
+                studentModalBackdrop.classList.remove("active");
+                refreshKPIs();
+            });
+
+            // ---------------- Instructors Table & CRUD ----------------
+            const instructorsTableBody = document.getElementById("adminInstructorsTableBody");
+            const instructorSearchInput = document.getElementById("instructorSearchInput");
+            const instructorModalBackdrop = document.getElementById("instructorModalBackdrop");
+            const openAddInstructorModalBtn = document.getElementById("openAddInstructorModalBtn");
+            const closeInstructorModalBtn = document.getElementById("closeInstructorModalBtn");
+            const cancelInstructorModalBtn = document.getElementById("cancelInstructorModalBtn");
+            const instructorModalForm = document.getElementById("instructorModalForm");
+            const instructorModalTitle = document.getElementById("instructorModalTitle");
+            const instructorFormMode = document.getElementById("instructorFormMode");
+            const instructorEditId = document.getElementById("instructorEditId");
+            const instructorFormName = document.getElementById("instructorFormName");
+            const instructorFormEmail = document.getElementById("instructorFormEmail");
+            const instructorFormTitle = document.getElementById("instructorFormTitle");
+            const instructorFormBio = document.getElementById("instructorFormBio");
+
+            function renderInstructorsTable() {
+                const query = instructorSearchInput.value.trim().toLowerCase();
+                let instructors = LMSStorage.getInstructors();
+
+                if (query) {
+                    instructors = instructors.filter(i =>
+                        i.name.toLowerCase().includes(query) ||
+                        i.title.toLowerCase().includes(query)
+                    );
+                }
+
+                document.getElementById("instructorsCountText").textContent = `Showing ${instructors.length} instructors`;
+
+                instructorsTableBody.innerHTML = instructors.map(inst => `
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="${inst.avatar}" class="rounded-circle" style="width: 36px; height: 36px; object-fit: cover;">
+                                <div>
+                                    <strong style="font-size: 14px;">${inst.name}</strong>
+                                    <div class="text-muted small">${inst.email}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>${inst.title}</div>
+                            <small class="text-muted" style="max-width: 300px; display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${inst.bio}</small>
+                        </td>
+                        <td><span class="badge bg-light text-dark">${inst.coursesCount || 2} Courses</span></td>
+                        <td><span class="text-warning fw-bold">★ ${inst.rating}</span></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button type="button" class="btn btn-sm btn-outline-secondary edit-inst-btn" data-id="${inst.id}">Edit</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger delete-inst-btn" data-id="${inst.id}">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join("");
+
+                instructorsTableBody.querySelectorAll(".edit-inst-btn").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const id = this.getAttribute("data-id");
+                        const i = LMSStorage.getInstructors().find(x => x.id === id);
+                        if (!i) return;
+                        instructorModalTitle.textContent = "Edit Instructor";
+                        instructorFormMode.value = "edit";
+                        instructorEditId.value = i.id;
+                        instructorFormName.value = i.name;
+                        instructorFormEmail.value = i.email;
+                        instructorFormTitle.value = i.title;
+                        instructorFormBio.value = i.bio;
+                        instructorModalBackdrop.classList.add("active");
+                    });
+                });
+
+                instructorsTableBody.querySelectorAll(".delete-inst-btn").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const id = this.getAttribute("data-id");
+                        if (confirm("Are you sure you want to delete this instructor?")) {
+                            LMSStorage.deleteInstructor(id);
+                            LMSStorage.showToast("Instructor deleted.", "success");
+                            refreshKPIs();
+                        }
+                    });
+                });
+            }
+
+            instructorSearchInput.addEventListener("input", renderInstructorsTable);
+
+            openAddInstructorModalBtn.addEventListener("click", function () {
+                instructorModalTitle.textContent = "Add New Instructor";
+                instructorFormMode.value = "add";
+                instructorEditId.value = "";
+                instructorModalForm.reset();
+                instructorModalBackdrop.classList.add("active");
+            });
+
+            closeInstructorModalBtn.addEventListener("click", () => instructorModalBackdrop.classList.remove("active"));
+            cancelInstructorModalBtn.addEventListener("click", () => instructorModalBackdrop.classList.remove("active"));
+
+            instructorModalForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const mode = instructorFormMode.value;
+                const instData = {
+                    name: instructorFormName.value.trim(),
+                    email: instructorFormEmail.value.trim(),
+                    title: instructorFormTitle.value.trim(),
+                    bio: instructorFormBio.value.trim()
+                };
+
+                if (mode === "add") {
+                    LMSStorage.addInstructor(instData);
+                    LMSStorage.showToast("Instructor added successfully!", "success");
+                } else {
+                    LMSStorage.updateInstructor(instructorEditId.value, instData);
+                    LMSStorage.showToast("Instructor updated successfully!", "success");
+                }
+                instructorModalBackdrop.classList.remove("active");
+                refreshKPIs();
+            });
+
+            // ---------------- Courses Table & CRUD (Admin View) ----------------
+            const coursesTableBody = document.getElementById("adminCoursesTableBody");
+            const adminCourseSearchInput = document.getElementById("adminCourseSearchInput");
+            const openAdminAddCourseModalBtn = document.getElementById("openAdminAddCourseModalBtn");
+            const adminCourseModalBackdrop = document.getElementById("adminCourseModalBackdrop");
+            const closeAdminCourseModalBtn = document.getElementById("closeAdminCourseModalBtn");
+            const cancelAdminCourseModalBtn = document.getElementById("cancelAdminCourseModalBtn");
+            const adminCourseModalForm = document.getElementById("adminCourseModalForm");
+            const adminCourseModalTitle = document.getElementById("adminCourseModalTitle");
+            const adminCourseFormMode = document.getElementById("adminCourseFormMode");
+            const adminCourseEditId = document.getElementById("adminCourseEditId");
+            const adminCourseFormTitle = document.getElementById("adminCourseFormTitle");
+            const adminCourseFormCategory = document.getElementById("adminCourseFormCategory");
+            const adminCourseFormLevel = document.getElementById("adminCourseFormLevel");
+            const adminCourseFormInstructor = document.getElementById("adminCourseFormInstructor");
+            const adminCourseFormDuration = document.getElementById("adminCourseFormDuration");
+            const adminCourseFormThumbnail = document.getElementById("adminCourseFormThumbnail");
+            const adminCourseFormDesc = document.getElementById("adminCourseFormDesc");
+            const adminCoursesCountText = document.getElementById("adminCoursesCountText");
+
+            function renderCoursesTable() {
+                let courses = LMSStorage.getCourses();
+                const query = adminCourseSearchInput ? adminCourseSearchInput.value.trim().toLowerCase() : "";
+
+                if (query) {
+                    courses = courses.filter(c =>
+                        c.title.toLowerCase().includes(query) ||
+                        c.category.toLowerCase().includes(query) ||
+                        c.instructor.toLowerCase().includes(query)
+                    );
+                }
+
+                if (adminCoursesCountText) {
+                    adminCoursesCountText.textContent = `Showing ${courses.length} of ${LMSStorage.getCourses().length} courses`;
+                }
+
+                if (courses.length === 0) {
+                    coursesTableBody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">No courses match your search.</td></tr>`;
+                    return;
+                }
+
+                coursesTableBody.innerHTML = courses.map(c => `
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="${c.thumbnail}" style="width: 44px; height: 32px; border-radius: 4px; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80'">
+                                <strong style="font-size: 14px;">${c.title}</strong>
+                            </div>
+                        </td>
+                        <td><span class="badge bg-light text-dark">${c.category}</span></td>
+                        <td>${c.instructor}</td>
+                        <td><span class="badge bg-info-subtle text-info">${c.level}</span></td>
+                        <td><strong>${(c.enrolledCount || 1000).toLocaleString()}</strong></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <a href="learning.html?course=${c.id}" class="btn btn-sm btn-outline-secondary" title="Preview Course">Preview</a>
+                                <button type="button" class="btn btn-sm btn-outline-primary admin-edit-course-btn" data-id="${c.id}">Edit</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger admin-delete-course-btn" data-id="${c.id}" title="Delete Course">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join("");
+
+                // Bind Edit Course buttons
+                coursesTableBody.querySelectorAll(".admin-edit-course-btn").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const id = this.getAttribute("data-id");
+                        const c = LMSStorage.getCourseById(id);
+                        if (!c) return;
+
+                        adminCourseModalTitle.textContent = "Edit Course: " + c.title;
+                        adminCourseFormMode.value = "edit";
+                        adminCourseEditId.value = c.id;
+                        adminCourseFormTitle.value = c.title;
+                        adminCourseFormCategory.value = c.category;
+                        adminCourseFormLevel.value = c.level;
+                        adminCourseFormInstructor.value = c.instructor;
+                        adminCourseFormDuration.value = c.duration;
+                        adminCourseFormThumbnail.value = c.thumbnail || "";
+                        adminCourseFormDesc.value = c.description || "";
+
+                        adminCourseModalBackdrop.classList.add("active");
+                    });
+                });
+
+                // Bind Delete Course buttons
+                coursesTableBody.querySelectorAll(".admin-delete-course-btn").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const id = this.getAttribute("data-id");
+                        if (confirm("Are you sure you want to delete this course from the catalog?")) {
+                            const deleted = LMSStorage.deleteCourse(id);
+                            LMSStorage.showToast(deleted ? "Course deleted from platform." : "The syllabus course cannot be deleted.", deleted ? "success" : "info");
+                            refreshKPIs();
+                        }
+                    });
+                });
+            }
+
+            if (adminCourseSearchInput) {
+                adminCourseSearchInput.addEventListener("input", renderCoursesTable);
+            }
+
+            if (openAdminAddCourseModalBtn) {
+                openAdminAddCourseModalBtn.addEventListener("click", function () {
+                    adminCourseModalTitle.textContent = "Add New Course";
+                    adminCourseFormMode.value = "add";
+                    adminCourseEditId.value = "";
+                    adminCourseModalForm.reset();
+                    adminCourseFormThumbnail.value = "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80";
+                    adminCourseModalBackdrop.classList.add("active");
+                });
+            }
+
+            if (closeAdminCourseModalBtn) {
+                closeAdminCourseModalBtn.addEventListener("click", () => adminCourseModalBackdrop.classList.remove("active"));
+            }
+            if (cancelAdminCourseModalBtn) {
+                cancelAdminCourseModalBtn.addEventListener("click", () => adminCourseModalBackdrop.classList.remove("active"));
+            }
+
+            if (adminCourseModalForm) {
+                adminCourseModalForm.addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    const mode = adminCourseFormMode.value;
+                    const courseData = {
+                        title: adminCourseFormTitle.value.trim(),
+                        category: adminCourseFormCategory.value,
+                        level: adminCourseFormLevel.value,
+                        instructor: adminCourseFormInstructor.value.trim(),
+                        duration: adminCourseFormDuration.value.trim(),
+                        thumbnail: adminCourseFormThumbnail.value.trim() || "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80",
+                        description: adminCourseFormDesc.value.trim()
+                    };
+
+                    if (mode === "add") {
+                        const created = LMSStorage.addCourse(courseData);
+                        if (!created) return;
+                        LMSStorage.showToast("Course created and published successfully!", "success");
+                    } else {
+                        LMSStorage.updateCourse(adminCourseEditId.value, courseData);
+                        LMSStorage.showToast("Course updated successfully!", "success");
+                    }
+
+                    adminCourseModalBackdrop.classList.remove("active");
+                    refreshKPIs();
+                });
+            }
+
+            // Initial render
+            refreshKPIs();
+
+            // Real-time Event-Driven Synchronization
+            if (typeof AppStorage !== "undefined") {
+                AppStorage.onDataChange(() => {
+                    refreshKPIs();
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

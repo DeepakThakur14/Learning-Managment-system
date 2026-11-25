@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnX - Create Account</title>
+    
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/auth.css">
+    <link rel="stylesheet" href="../CSS/lms.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+
+    <style>
+        .role-tab-btn {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid var(--theme-border, #e2e8f0);
+            background: var(--theme-bg, #f8fafc);
+            color: var(--theme-muted, #64748b);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .role-tab-btn.active {
+            background: var(--theme-primary, #6366f1);
+            color: #ffffff;
+            border-color: var(--theme-primary, #6366f1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-page">
+
+        <div class="auth-card signup-card">
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <a href="../home.html" class="logo text-decoration-none">
+                    Learn<span>X</span>
+                </a>
+                <a href="../home.html" class="text-muted small text-decoration-none">← Back to Home</a>
+            </div>
+
+            <p class="tagline">Create your account and start learning with LearnX</p>
+
+            <h1>Create Account</h1>
+            <p class="subtitle">Start your personalized learning path</p>
+
+            <!-- Role Selector: Student vs Instructor -->
+            <div class="d-flex gap-2 mb-3">
+                <button type="button" class="role-tab-btn active" data-role="student">🎓 Register as Student</button>
+                <button type="button" class="role-tab-btn" data-role="instructor">👨‍🏫 Register as Instructor</button>
+            </div>
+
+            <form id="signupForm" autocomplete="off" novalidate>
+                <input type="hidden" id="authRole" name="authRole" value="student">
+
+                <div class="input-box">
+                    <span>👤</span>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Full Name"
+                        autocomplete="off" autocapitalize="words" spellcheck="false" data-lpignore="true"
+                        required
+                    >
+                </div>
+
+                <div class="input-box">
+                    <span>✉</span>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Email Address"
+                        autocomplete="off" autocapitalize="none" spellcheck="false" data-lpignore="true"
+                        required
+                    >
+                </div>
+
+                <div class="input-box position-relative">
+                    <span>🔒</span>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create Password (10+ chars, upper/lower/number/symbol)"
+                        minlength="10" autocomplete="new-password" data-lpignore="true"
+                        required
+                    >
+                    <button type="button" class="toggle-password-btn" data-target="password" style="position: absolute; right: 12px; background: none; border: none; cursor: pointer; color: #94a3b8; font-size: 16px;" aria-label="Toggle password visibility">
+                        👁️
+                    </button>
+                </div>
+
+                <div class="input-box position-relative">
+                    <span>🔒</span>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        placeholder="Confirm Password"
+                        autocomplete="new-password" data-lpignore="true"
+                        required
+                    >
+                    <button type="button" class="toggle-password-btn" data-target="confirmPassword" style="position: absolute; right: 12px; background: none; border: none; cursor: pointer; color: #94a3b8; font-size: 16px;" aria-label="Toggle password visibility">
+                        👁️
+                    </button>
+                </div>
+
+                <div class="form-check text-start mb-3">
+                    <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                    <label class="form-check-label text-muted small" for="termsCheck">
+                        I agree to the LearnX <a href="#">Terms of Service</a> &amp; <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" id="submitSignupBtn">
+                    Create Student Account
+                </button>
+            </form>
+
+            <p class="bottom-text mt-3">
+                Already have an account?
+                <a href="login.html">Sign In</a>
+            </p>
+
+        </div>
+
+        <div class="side-content signup-side">
+            <div class="cap mb-3" style="font-size: 48px;">
+                🎓
+            </div>
+            <h2>Unlock Your Full<br><span>Engineering Potential</span></h2>
+            <p>
+                Get unlimited access to video lessons, verified certificates,
+                hands-on assignments, and dedicated instructor support.
+            </p>
+
+            <div class="mt-4 text-start">
+                <div class="d-flex align-items-center gap-2 mb-2 text-white">
+                    <span class="text-success fw-bold">✓</span> Free access to beginner modules
+                </div>
+                <div class="d-flex align-items-center gap-2 mb-2 text-white">
+                    <span class="text-success fw-bold">✓</span> Personalized learning roadmaps
+                </div>
+                <div class="d-flex align-items-center gap-2 text-white">
+                    <span class="text-success fw-bold">✓</span> Verified credential certificates
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../JS/data.js"></script>
+    <script src="../JS/auth.js"></script>
+
+    <script>
+        // Role Tab Switching
+        document.querySelectorAll(".role-tab-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+                document.querySelectorAll(".role-tab-btn").forEach(b => b.classList.remove("active"));
+                this.classList.add("active");
+                const role = this.getAttribute("data-role");
+                document.getElementById("authRole").value = role;
+
+                const submitBtn = document.getElementById("submitSignupBtn");
+                if (submitBtn) {
+                    submitBtn.textContent = role === "instructor" 
+                        ? "Create Instructor Account" 
+                        : "Create Student Account";
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

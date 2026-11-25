@@ -1,0 +1,313 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f8ff;
+    color: #18253d;
+}
+
+.auth-page {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 70px;
+
+    padding: 40px;
+
+    background: #f4f8ff;
+}
+
+.side-content {
+    width: 220px;
+}
+
+.side-content h2 {
+    font-size: 30px;
+    line-height: 1.15;
+
+    margin-bottom: 18px;
+}
+
+.side-content h2 span {
+    color: #1769e0;
+}
+
+.side-content p {
+    color: #64748b;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.auth-card {
+    width: 440px;
+
+    background: white;
+
+    padding: 32px 42px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+
+    text-align: center;
+}
+
+.logo {
+    font-size: 40px;
+    font-weight: bold;
+
+    color: #14213d;
+}
+
+.logo span {
+    color: #1769e0;
+}
+
+.tagline {
+    color: #718096;
+
+    font-size: 13px;
+
+    margin-top: 5px;
+    margin-bottom: 28px;
+}
+
+.auth-card h1 {
+    font-size: 27px;
+
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #64748b;
+
+    font-size: 14px;
+
+    margin-bottom: 25px;
+}
+
+form {
+    text-align: left;
+}
+
+.input-box {
+    width: 100%;
+
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    border: 1px solid #d8e0eb;
+
+    border-radius: 8px;
+
+    padding: 0 14px;
+
+    margin-bottom: 14px;
+
+    background: #fbfdff;
+}
+
+.input-box span {
+    font-size: 17px;
+}
+
+.input-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-size: 14px;
+
+    color: #333;
+}
+
+.input-box:focus-within {
+    border-color: #1769e0;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 12px;
+
+    margin: 8px 0 20px;
+}
+
+.form-options label {
+    color: #64748b;
+
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+}
+
+.form-options a {
+    color: #1769e0;
+}
+
+button {
+    width: 100%;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #1769e0;
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0d55bd;
+}
+
+.or {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    color: #9aa5b5;
+
+    font-size: 12px;
+
+    margin: 22px 0;
+}
+
+.or span {
+    height: 1px;
+
+    background: #e1e6ed;
+
+    flex: 1;
+}
+
+.google-btn {
+    background: white;
+
+    color: #18253d;
+
+    border: 1px solid #d8e0eb;
+
+    font-weight: normal;
+}
+
+.google-btn:hover {
+    background: #f8fafc;
+}
+
+.google-btn b {
+    color: #4285f4;
+
+    margin-right: 8px;
+}
+
+.bottom-text {
+    color: #64748b;
+
+    font-size: 13px;
+
+    margin-top: 22px;
+}
+
+.bottom-text a {
+    color: #1769e0;
+
+    font-weight: bold;
+}
+
+.signup-card {
+    width: 460px;
+}
+
+.signup-side {
+    text-align: center;
+}
+
+.cap {
+    font-size: 70px;
+
+    margin-bottom: 10px;
+}
+
+.signup-side h2 {
+    font-size: 30px;
+}
+
+.signup-side h2 span {
+    color: #1769e0;
+}
+
+.signup-side p {
+    margin-top: 15px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 800px) {
+
+    .auth-page {
+        padding: 25px;
+    }
+
+    .side-content {
+        display: none;
+    }
+
+    .auth-card {
+        width: 100%;
+        max-width: 440px;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .auth-page {
+        padding: 15px;
+    }
+
+    .auth-card {
+        padding: 28px 22px;
+    }
+
+    .logo {
+        font-size: 34px;
+    }
+
+    .auth-card h1 {
+        font-size: 24px;
+    }
+
+}
+/* Password visibility controls: keep the input editable and the eye button clickable. */
+.input-box.position-relative { position: relative; }
+.input-box.position-relative input { min-width: 0; padding-right: 42px; pointer-events: auto; position: relative; z-index: 1; }
+.input-box .toggle-password-btn { position: absolute !important; right: 10px !important; top: 50% !important; transform: translateY(-50%); z-index: 3; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; padding: 0; pointer-events: auto; line-height: 1; }
+.input-box .toggle-password-btn:focus-visible { outline: 2px solid #6366f1; outline-offset: 2px; border-radius: 6px; }

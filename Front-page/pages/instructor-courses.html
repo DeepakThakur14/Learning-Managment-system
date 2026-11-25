@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Course Studio | LearnX</title>
+
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- LearnX Stylesheets -->
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/lms.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+</head>
+
+<body data-theme="light">
+
+    <!-- NAVBAR -->
+    <header class="lms-navbar">
+        <div class="lms-nav-container">
+            <a href="../home.html" class="lms-brand">
+                <img src="../assets/Images/Project logo.png" alt="LearnX Logo" onerror="this.outerHTML='<span>Learn<span>X</span></span>'">
+            </a>
+
+            <button class="lms-mobile-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+                ☰
+            </button>
+
+            <ul class="lms-nav-menu" id="mainNavLinks">
+                <li><a href="../home.html" class="lms-nav-link">Home</a></li>
+                <li><a href="courses.html" class="lms-nav-link">Catalog</a></li>
+                <li><a href="instructor-dashboard.html" class="lms-nav-link">Dashboard</a></li>
+                <li><a href="instructor-content.html" class="lms-nav-link">Assignments & Quizzes</a></li>
+                <li><a href="instructor-courses.html" class="lms-nav-link active">Manage Courses</a></li>
+                <li><a href="student-dashboard.html" class="lms-nav-link">Student View</a></li>
+            </ul>
+
+            <div class="lms-nav-actions">
+                <button id="themeToggleBtn" class="theme-toggle-btn" type="button" style="padding: 6px 14px; font-size: 13px;">
+                    🎨 Themes
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- DASHBOARD WRAPPER -->
+    <div class="lms-dashboard-wrapper">
+
+        <!-- SIDEBAR -->
+        <aside class="lms-sidebar">
+            <div>
+                <div class="lms-sidebar-header">Instructor Panel</div>
+                <div class="lms-sidebar-nav">
+                    <a href="instructor-dashboard.html" class="lms-sidebar-link">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                    <a href="instructor-courses.html" class="lms-sidebar-link active">
+                        <i class="bi bi-collection-play"></i> My Courses &amp; Lessons
+                    </a>
+                    <a href="assignments.html" class="lms-sidebar-link">
+                        <i class="bi bi-check2-square"></i> Student Submissions
+                    </a>
+                </div>
+
+                <div class="lms-sidebar-header mt-4">Switch View</div>
+                <div class="lms-sidebar-nav">
+                    <a href="student-dashboard.html" class="lms-sidebar-link">
+                        <i class="bi bi-mortarboard"></i> Student Portal
+                    </a>
+                    <a href="admin-dashboard.html" class="lms-sidebar-link">
+                        <i class="bi bi-shield-lock"></i> Admin Portal
+                    </a>
+                </div>
+
+                <div class="mt-4 pt-3 border-top">
+                    <button type="button" class="btn btn-sm btn-outline-danger w-100 lms-logout-action-btn">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="lms-main-content">
+
+            <!-- Header with Add Course Button -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                <div>
+                    <h1 class="fw-bold fs-3 mb-1" style="color: var(--theme-text);">Course Studio &amp; Curriculum Management</h1>
+                    <p class="text-muted mb-0">Create new courses, edit learning descriptions, upload lessons, and manage enrolled students.</p>
+                </div>
+                <button type="button" class="lms-btn lms-btn-primary" id="openAddCourseModalBtn">
+                    <i class="bi bi-plus-circle"></i> Create New Course
+                </button>
+            </div>
+
+            <!-- Courses Management Card -->
+            <div class="lms-card">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                    <h3 class="fs-5 fw-bold mb-0">Course Catalog Management</h3>
+                    <div class="input-group" style="max-width: 320px;">
+                        <span class="input-group-text bg-light border-end-0">🔍</span>
+                        <input type="search" id="instructorCourseSearch" class="form-control border-start-0" placeholder="Filter courses...">
+                    </div>
+                </div>
+
+                <div class="lms-table-responsive">
+                    <table class="lms-table">
+                        <thead>
+                            <tr>
+                                <th>Thumbnail &amp; Title</th>
+                                <th>Category</th>
+                                <th>Level</th>
+                                <th>Curriculum</th>
+                                <th>Enrolled</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="courseManagementTableBody">
+                            <!-- Injected dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Syllabus Modules & Topic Explorer (Requirement 5) -->
+            <div class="lms-card mt-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                    <div>
+                        <h3 class="fs-5 fw-bold mb-1">Frontend Web Development — Syllabus Modules &amp; Topics</h3>
+                        <p class="text-muted small mb-0">Browse and manage all 21 curriculum modules and topics. Create syllabus-aligned assignments and quizzes.</p>
+                    </div>
+                    <div class="d-flex gap-2 align-items-center">
+                        <input type="search" id="syllabusTopicSearchInput" class="form-control form-control-sm" style="max-width: 250px;" placeholder="Search syllabus topics...">
+                        <button type="button" class="lms-btn lms-btn-outline lms-btn-sm" id="collapseAllSyllabusBtn">Collapse All</button>
+                        <button type="button" class="lms-btn lms-btn-outline lms-btn-sm" id="expandAllSyllabusBtn">Expand All</button>
+                    </div>
+                </div>
+
+                <div id="syllabusAccordionContainer" class="d-flex flex-column gap-3">
+                    <!-- Injected dynamically from course curriculum -->
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- CREATE / EDIT COURSE MODAL -->
+    <div class="lms-modal-backdrop" id="courseModalBackdrop">
+        <div class="lms-modal" role="dialog" aria-modal="true">
+            <div class="lms-modal-header">
+                <h3 id="courseModalTitle">Create New Course</h3>
+                <button type="button" class="lms-modal-close" id="closeCourseModalBtn">✕</button>
+            </div>
+            <form id="courseForm">
+                <input type="hidden" id="courseFormMode" value="create">
+                <input type="hidden" id="editCourseId" value="">
+
+                <div class="lms-modal-body">
+                    <div class="mb-3">
+                        <label for="courseFormTitle" class="form-label fw-bold small">Course Title</label>
+                        <input type="text" class="form-control" id="courseFormTitle" required placeholder="e.g. Full-Stack Modern Web Architecture">
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="courseFormCategory" class="form-label fw-bold small">Category</label>
+                            <select class="form-select" id="courseFormCategory" required>
+                                <option value="Web Development">Web Development</option>
+                                <option value="HTML">HTML</option>
+                                <option value="CSS">CSS</option>
+                                <option value="Responsive Design">Responsive Design</option>
+                                <option value="JavaScript">JavaScript</option>
+                                <option value="JavaScript & APIs">JavaScript &amp; APIs</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="courseFormDuration" class="form-label fw-bold small">Estimated Duration</label>
+                            <input type="text" class="form-control" id="courseFormDuration" required placeholder="e.g. 24 hours">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="courseFormInstructor" class="form-label fw-bold small">Lead Instructor</label>
+                            <input type="text" class="form-control" id="courseFormInstructor" value="" placeholder="Your instructor name" readonly required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="courseFormThumbnail" class="form-label fw-bold small">Thumbnail Image URL</label>
+                        <input type="url" class="form-control" id="courseFormThumbnail" placeholder="https://images.unsplash.com/...">
+                        <small class="text-muted">Leave blank for automatic default course banner.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="courseFormDescription" class="form-label fw-bold small">Course Description</label>
+                        <textarea class="form-control" id="courseFormDescription" rows="3" required placeholder="Outline the curriculum topics, target audience and objectives..."></textarea>
+                    </div>
+                </div>
+
+                <div class="lms-modal-footer">
+                    <button type="button" class="lms-btn lms-btn-outline" id="cancelCourseModalBtn">Cancel</button>
+                    <button type="submit" class="lms-btn lms-btn-primary" id="saveCourseModalBtn">Save Course</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD LESSON MODAL -->
+    <div class="lms-modal-backdrop" id="lessonModalBackdrop">
+        <div class="lms-modal" role="dialog" aria-modal="true">
+            <div class="lms-modal-header">
+                <h3 id="lessonModalHeading">Add Lesson to Course</h3>
+                <button type="button" class="lms-modal-close" id="closeLessonModalBtn">✕</button>
+            </div>
+            <form id="addLessonForm">
+                <input type="hidden" id="lessonTargetCourseId">
+
+                <div class="lms-modal-body">
+                    <div class="mb-3">
+                        <label for="lessonModuleSelect" class="form-label fw-bold small">Target Module</label>
+                        <input type="text" class="form-control" id="lessonModuleSelect" value="Module 1: Core Fundamentals" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="lessonTitleInput" class="form-label fw-bold small">Lesson Title</label>
+                        <input type="text" class="form-control" id="lessonTitleInput" placeholder="e.g. Deep Dive into Async/Await" required>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="lessonDurationInput" class="form-label fw-bold small">Duration (e.g. 25m)</label>
+                            <input type="text" class="form-control" id="lessonDurationInput" placeholder="25m" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lessonVideoUrlInput" class="form-label fw-bold small">Video Embed URL</label>
+                            <input type="url" class="form-control" id="lessonVideoUrlInput" value="https://www.youtube.com/embed/dQw4w9WgXcQ" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="lessonSummaryInput" class="form-label fw-bold small">Lesson Summary Notes</label>
+                        <textarea class="form-control" id="lessonSummaryInput" rows="3" placeholder="Key takeaways and lecture breakdown..."></textarea>
+                    </div>
+                </div>
+
+                <div class="lms-modal-footer">
+                    <button type="button" class="lms-btn lms-btn-outline" id="cancelLessonModalBtn">Cancel</button>
+                    <button type="submit" class="lms-btn lms-btn-primary">Add Lesson to Curriculum</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- VIEW ENROLLED STUDENTS MODAL -->
+    <div class="lms-modal-backdrop" id="enrolledStudentsModalBackdrop">
+        <div class="lms-modal" role="dialog" aria-modal="true" style="max-width: 680px;">
+            <div class="lms-modal-header">
+                <h3 id="enrolledStudentsModalTitle">Enrolled Students</h3>
+                <button type="button" class="lms-modal-close" id="closeEnrolledStudentsModalBtn">✕</button>
+            </div>
+            <div class="lms-modal-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Email</th>
+                                <th>Overall Progress</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="enrolledStudentsListBody">
+                            <!-- Injected dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="lms-modal-footer">
+                <button type="button" class="lms-btn lms-btn-primary" id="closeEnrolledStudentsModalBtn2">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- THEME PANEL -->
+    <div class="theme-overlay" id="themeOverlay"></div>
+    <div class="theme-panel" id="themePanel" role="dialog" aria-modal="true">
+        <div class="theme-panel-header">
+            <div>
+                <span class="theme-panel-label">INTERFACE</span>
+                <h2>Theme Settings</h2>
+            </div>
+            <button id="closeThemePanel" type="button">✕</button>
+        </div>
+        <h3>Select Theme</h3>
+        <div class="theme-options">
+            <button type="button" class="theme-option" data-theme-choice="light">☀️ Light</button>
+            <button type="button" class="theme-option" data-theme-choice="dark">🌙 Dark</button>
+            <button type="button" class="theme-option" data-theme-choice="purple">🔮 Purple</button>
+            <button type="button" class="theme-option" data-theme-choice="ocean">🌊 Ocean</button>
+            <button type="button" class="theme-option" data-theme-choice="forest">🌲 Forest</button>
+            <button type="button" class="theme-option" data-theme-choice="rose">🌹 Rose</button>
+            <button type="button" class="theme-option" data-theme-choice="sunset">🌅 Sunset</button>
+            <button type="button" class="theme-option" data-theme-choice="midnight">🌌 Midnight</button>
+            <button type="button" class="theme-option" data-theme-choice="lavender">🪻 Lavender</button>
+            <button type="button" class="theme-option" data-theme-choice="mint">🍃 Mint</button>
+            <button type="button" class="theme-option" data-theme-choice="gold">⭐ Gold</button>
+            <button type="button" class="theme-option" data-theme-choice="neon">⚡ Neon</button>
+        </div>
+        <button type="button" id="resetTheme" class="reset-theme-btn">Reset Default</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/data.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/theme.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const tableBody = document.getElementById("courseManagementTableBody");
+            const searchInput = document.getElementById("instructorCourseSearch");
+
+            // Course Modal Elements
+            const courseModalBackdrop = document.getElementById("courseModalBackdrop");
+            const openAddCourseModalBtn = document.getElementById("openAddCourseModalBtn");
+            const closeCourseModalBtn = document.getElementById("closeCourseModalBtn");
+            const cancelCourseModalBtn = document.getElementById("cancelCourseModalBtn");
+            const courseForm = document.getElementById("courseForm");
+            const courseModalTitle = document.getElementById("courseModalTitle");
+            const courseFormMode = document.getElementById("courseFormMode");
+            const editCourseId = document.getElementById("editCourseId");
+            const courseFormTitle = document.getElementById("courseFormTitle");
+            const courseFormCategory = document.getElementById("courseFormCategory");
+            const courseFormLevel = document.getElementById("courseFormLevel");
+            const courseFormDuration = document.getElementById("courseFormDuration");
+            const courseFormInstructor = document.getElementById("courseFormInstructor");
+            const courseFormThumbnail = document.getElementById("courseFormThumbnail");
+            const courseFormDescription = document.getElementById("courseFormDescription");
+
+            // Lesson Modal Elements
+            const lessonModalBackdrop = document.getElementById("lessonModalBackdrop");
+            const closeLessonModalBtn = document.getElementById("closeLessonModalBtn");
+            const cancelLessonModalBtn = document.getElementById("cancelLessonModalBtn");
+            const addLessonForm = document.getElementById("addLessonForm");
+            const lessonTargetCourseId = document.getElementById("lessonTargetCourseId");
+            const lessonModuleSelect = document.getElementById("lessonModuleSelect");
+            const lessonTitleInput = document.getElementById("lessonTitleInput");
+            const lessonDurationInput = document.getElementById("lessonDurationInput");
+            const lessonVideoUrlInput = document.getElementById("lessonVideoUrlInput");
+            const lessonSummaryInput = document.getElementById("lessonSummaryInput");
+
+            // Enrolled Students Modal Elements
+            const enrolledStudentsModalBackdrop = document.getElementById("enrolledStudentsModalBackdrop");
+            const closeEnrolledStudentsModalBtn = document.getElementById("closeEnrolledStudentsModalBtn");
+            const closeEnrolledStudentsModalBtn2 = document.getElementById("closeEnrolledStudentsModalBtn2");
+            const enrolledStudentsModalTitle = document.getElementById("enrolledStudentsModalTitle");
+            const enrolledStudentsListBody = document.getElementById("enrolledStudentsListBody");
+
+            function renderCoursesTable() {
+                const query = searchInput.value.trim().toLowerCase();
+                const currentInstructor = LMSStorage.getCurrentUser();
+                let courses = LMSStorage.getCourses().filter(c =>
+                    c.instructorId === currentInstructor.id ||
+                    (c.instructor && c.instructor.toLowerCase() === (currentInstructor.name || "").toLowerCase())
+                );
+
+                if (query) {
+                    courses = courses.filter(c => 
+                        c.title.toLowerCase().includes(query) ||
+                        c.category.toLowerCase().includes(query) ||
+                        c.level.toLowerCase().includes(query)
+                    );
+                }
+
+                if (courses.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">No courses found.</td></tr>`;
+                    return;
+                }
+
+                tableBody.innerHTML = courses.map(c => {
+                    let lessonCount = 0;
+                    if (c.curriculum) {
+                        c.curriculum.forEach(m => { if (m.lessons) lessonCount += m.lessons.length; });
+                    }
+
+                    return `
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="${c.thumbnail}" alt="" style="width: 52px; height: 38px; object-fit: cover; border-radius: 6px;">
+                                    <div>
+                                        <strong style="font-size: 14px;">${c.title}</strong>
+                                        <p class="text-muted small mb-0">${c.instructor}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="badge bg-light text-dark">${c.category}</span></td>
+                            <td><span class="badge bg-info-subtle text-info">${c.level}</span></td>
+                            <td>
+                                <strong>${lessonCount}</strong> lessons (${c.duration})
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-link p-0 text-decoration-none view-enrolled-btn" data-id="${c.id}">
+                                    👥 ${(c.enrolledCount || 1000).toLocaleString()} students
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <button type="button" class="btn btn-sm btn-outline-primary add-lesson-btn" data-id="${c.id}" title="Add Lesson">
+                                        + Lesson
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary edit-course-btn" data-id="${c.id}" title="Edit Course">
+                                        Edit
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger delete-course-btn" data-id="${c.id}" title="Delete Course">
+                                        🗑
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join("");
+
+                // Bind Action Buttons
+                tableBody.querySelectorAll(".edit-course-btn").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const id = this.getAttribute("data-id");
+                        openEditCourseModal(id);
+                    });
+                });
+
+                tableBody.querySelectorAll(".delete-course-btn").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const id = this.getAttribute("data-id");
+                        if (confirm("Are you sure you want to delete this course? This action cannot be undone.")) {
+                            const deleted = LMSStorage.deleteCourse(id);
+                            LMSStorage.showToast(deleted ? "Course deleted successfully." : "The syllabus course cannot be deleted.", deleted ? "success" : "info");
+                            renderCoursesTable();
+                        }
+                    });
+                });
+
+                tableBody.querySelectorAll(".add-lesson-btn").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const id = this.getAttribute("data-id");
+                        openAddLessonModal(id);
+                    });
+                });
+
+                tableBody.querySelectorAll(".view-enrolled-btn").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const id = this.getAttribute("data-id");
+                        openEnrolledStudentsModal(id);
+                    });
+                });
+            }
+
+            // Search filter input
+            searchInput.addEventListener("input", renderCoursesTable);
+
+            // Modal Functions: Course Add/Edit
+            openAddCourseModalBtn.addEventListener("click", function () {
+                courseModalTitle.textContent = "Create New Course";
+                courseFormMode.value = "create";
+                editCourseId.value = "";
+                courseForm.reset();
+                const curUser = LMSStorage.getCurrentUser();
+                courseFormInstructor.value = (curUser && curUser.role === "instructor") ? curUser.name : "";
+                courseModalBackdrop.classList.add("active");
+            });
+
+            function openEditCourseModal(id) {
+                const course = LMSStorage.getCourseById(id);
+                const currentInstructor = LMSStorage.getCurrentUser();
+                if (!course || (course.instructorId !== currentInstructor.id && course.instructor !== currentInstructor.name)) {
+                    LMSStorage.showToast("You can only edit courses assigned to your account.", "danger"); return;
+                }
+
+                courseModalTitle.textContent = "Edit Course: " + course.title;
+                courseFormMode.value = "edit";
+                editCourseId.value = course.id;
+
+                courseFormTitle.value = course.title;
+                courseFormCategory.value = course.category;
+                courseFormLevel.value = course.level;
+                courseFormDuration.value = course.duration;
+                courseFormInstructor.value = course.instructor;
+                courseFormThumbnail.value = course.thumbnail;
+                courseFormDescription.value = course.description;
+
+                courseModalBackdrop.classList.add("active");
+            }
+
+            function closeCourseModal() {
+                courseModalBackdrop.classList.remove("active");
+            }
+
+            closeCourseModalBtn.addEventListener("click", closeCourseModal);
+            cancelCourseModalBtn.addEventListener("click", closeCourseModal);
+
+            courseForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const mode = courseFormMode.value;
+                const courseData = {
+                    title: courseFormTitle.value.trim(),
+                    category: courseFormCategory.value,
+                    level: courseFormLevel.value,
+                    duration: courseFormDuration.value.trim(),
+                    instructor: courseFormInstructor.value.trim(),
+                    thumbnail: courseFormThumbnail.value.trim() || "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80",
+                    description: courseFormDescription.value.trim()
+                };
+
+                if (mode === "create") {
+                    const currentInstructor = LMSStorage.getCurrentUser();
+                    courseData.instructor = currentInstructor.name;
+                    const created = LMSStorage.addCourse(courseData, currentInstructor.id);
+                    if (!created) return;
+                    LMSStorage.showToast("Course created successfully!", "success");
+                } else {
+                    const id = editCourseId.value;
+                    LMSStorage.updateCourse(id, courseData);
+                    LMSStorage.showToast("Course updated successfully!", "success");
+                }
+
+                closeCourseModal();
+                renderCoursesTable();
+            });
+
+            // Modal Functions: Add Lesson
+            function openAddLessonModal(courseId) {
+                const course = LMSStorage.getCourseById(courseId);
+                const currentInstructor = LMSStorage.getCurrentUser();
+                if (!course || (course.instructorId !== currentInstructor.id && course.instructor !== currentInstructor.name)) {
+                    LMSStorage.showToast("You can only add lessons to your own courses.", "danger"); return;
+                }
+
+                lessonTargetCourseId.value = course.id;
+                document.getElementById("lessonModalHeading").textContent = `Add Lesson to: ${course.title}`;
+                addLessonForm.reset();
+                lessonVideoUrlInput.value = "https://www.youtube.com/embed/dQw4w9WgXcQ";
+
+                lessonModalBackdrop.classList.add("active");
+            }
+
+            function closeLessonModal() {
+                lessonModalBackdrop.classList.remove("active");
+            }
+
+            closeLessonModalBtn.addEventListener("click", closeLessonModal);
+            cancelLessonModalBtn.addEventListener("click", closeLessonModal);
+
+            addLessonForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const courseId = lessonTargetCourseId.value;
+                const course = LMSStorage.getCourseById(courseId);
+                if (!course) return;
+
+                const modName = lessonModuleSelect.value.trim() || "Module 1";
+                const newLesson = {
+                    id: `${courseId}-l${Date.now().toString().slice(-4)}`,
+                    title: lessonTitleInput.value.trim(),
+                    duration: lessonDurationInput.value.trim(),
+                    videoUrl: lessonVideoUrlInput.value.trim(),
+                    summary: lessonSummaryInput.value.trim()
+                };
+
+                if (!course.curriculum) course.curriculum = [];
+
+                let mod = course.curriculum.find(m => m.title.toLowerCase() === modName.toLowerCase());
+                if (!mod) {
+                    mod = { id: "mod-" + Date.now(), title: modName, lessons: [] };
+                    course.curriculum.push(mod);
+                }
+                mod.lessons.push(newLesson);
+
+                // Update course in storage
+                LMSStorage.updateCourse(courseId, { curriculum: course.curriculum });
+                LMSStorage.showToast(`Lesson "${newLesson.title}" added to curriculum!`, "success");
+                closeLessonModal();
+                renderCoursesTable();
+            });
+
+            // Modal Functions: View Enrolled Students
+            function openEnrolledStudentsModal(courseId) {
+                const course = LMSStorage.getCourseById(courseId);
+                if (!course) return;
+
+                enrolledStudentsModalTitle.textContent = `Enrolled Students: ${course.title}`;
+                const students = LMSStorage.getStudents();
+                const enrolled = typeof EnrollmentService !== "undefined"
+                    ? EnrollmentService.getStudentsEnrolledInCourse(course.id)
+                    : students.filter(s => s.enrolledCourses && s.enrolledCourses.includes(course.id));
+
+                if (enrolled.length === 0) {
+                    enrolledStudentsListBody.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-3">No students enrolled yet.</td></tr>`;
+                } else {
+                    enrolledStudentsListBody.innerHTML = enrolled.map(s => {
+                        const sProg = typeof ProgressService !== "undefined"
+                            ? ProgressService.getCourseProgress(s.id, course.id).percentage
+                            : (s.progress || 0);
+                        return `
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="${s.avatar}" class="rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
+                                    <strong>${s.name}</strong>
+                                </div>
+                            </td>
+                            <td class="text-muted small">${s.email}</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="progress flex-grow-1" style="height: 6px;">
+                                        <div class="progress-bar bg-success" style="width: ${sProg}%;"></div>
+                                    </div>
+                                    <span class="small fw-bold">${sProg}%</span>
+                                </div>
+                            </td>
+                            <td><span class="badge bg-success-subtle text-success">${s.status || 'Active'}</span></td>
+                        </tr>
+                    `;
+                    }).join("");
+                }
+
+                enrolledStudentsModalBackdrop.classList.add("active");
+            }
+
+            closeEnrolledStudentsModalBtn.addEventListener("click", () => enrolledStudentsModalBackdrop.classList.remove("active"));
+            closeEnrolledStudentsModalBtn2.addEventListener("click", () => enrolledStudentsModalBackdrop.classList.remove("active"));
+
+            // Syllabus Explorer & Topic Management Logic
+            const syllabusSearch = document.getElementById("syllabusTopicSearchInput");
+            const syllabusContainer = document.getElementById("syllabusAccordionContainer");
+            const collapseAllBtn = document.getElementById("collapseAllSyllabusBtn");
+            const expandAllBtn = document.getElementById("expandAllSyllabusBtn");
+
+            function renderSyllabusExplorer() {
+                if (!syllabusContainer) return;
+                const course = LMSStorage.getCourseById("course-1");
+                if (!course || !course.curriculum) {
+                    syllabusContainer.innerHTML = `<p class="text-muted p-3">No syllabus data available.</p>`;
+                    return;
+                }
+
+                const query = (syllabusSearch ? syllabusSearch.value : "").trim().toLowerCase();
+
+                let renderedModules = course.curriculum.map((mod, idx) => {
+                    const matchingLessons = (mod.lessons || []).filter(l => {
+                        if (!query) return true;
+                        return l.title.toLowerCase().includes(query) || mod.title.toLowerCase().includes(query);
+                    });
+
+                    if (query && matchingLessons.length === 0) return null;
+
+                    const lessonsList = matchingLessons.map(l => `
+                        <div class="d-flex justify-content-between align-items-center p-2 border-bottom bg-white" style="font-size: 13px;">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-primary">▶</span>
+                                <span class="fw-semibold text-dark">${l.title}</span>
+                                <span class="badge bg-light text-secondary">${l.duration || '25m'}</span>
+                            </div>
+                            <div class="d-flex gap-1">
+                                <a href="learning.html?course=${course.id}&lesson=${l.id}" class="btn btn-sm btn-outline-secondary py-0 px-2" style="font-size: 11px;">Preview</a>
+                                <button type="button" class="btn btn-sm btn-outline-primary py-0 px-2 edit-topic-btn" data-topic-id="${l.id}" data-mod-id="${mod.id}" style="font-size: 11px;">Edit</button>
+                            </div>
+                        </div>
+                    `).join("");
+
+                    return `
+                        <div class="border rounded overflow-hidden syllabus-module-card">
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-light cursor-pointer syllabus-mod-header" style="cursor: pointer;" data-mod-idx="${idx}">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-primary-subtle text-primary fw-bold">${mod.lessons ? mod.lessons.length : 0} Topics</span>
+                                    <h6 class="fw-bold mb-0 text-dark">${mod.title}</h6>
+                                </div>
+                                <span class="text-muted toggle-icon">▼</span>
+                            </div>
+                            <div class="syllabus-mod-body ${query ? '' : (idx > 2 ? 'd-none' : '')}">
+                                ${lessonsList || '<p class="text-muted p-2 mb-0 small">No topics in this module.</p>'}
+                            </div>
+                        </div>
+                    `;
+                }).filter(Boolean);
+
+                if (renderedModules.length === 0) {
+                    syllabusContainer.innerHTML = `<p class="text-muted text-center py-4">No syllabus topics match "${query}".</p>`;
+                    return;
+                }
+
+                syllabusContainer.innerHTML = renderedModules.join("");
+
+                // Accordion toggle click handlers
+                syllabusContainer.querySelectorAll(".syllabus-mod-header").forEach(hdr => {
+                    hdr.addEventListener("click", function () {
+                        const body = this.nextElementSibling;
+                        const icon = this.querySelector(".toggle-icon");
+                        if (body.classList.contains("d-none")) {
+                            body.classList.remove("d-none");
+                            icon.textContent = "▲";
+                        } else {
+                            body.classList.add("d-none");
+                            icon.textContent = "▼";
+                        }
+                    });
+                });
+
+                // Edit topic buttons
+                syllabusContainer.querySelectorAll(".edit-topic-btn").forEach(btn => {
+                    btn.addEventListener("click", function (e) {
+                        e.stopPropagation();
+                        const tId = this.getAttribute("data-topic-id");
+                        const mId = this.getAttribute("data-mod-id");
+                        const newTitle = prompt("Update Topic Title:", "");
+                        if (newTitle && newTitle.trim()) {
+                            const crs = LMSStorage.getCourseById("course-1");
+                            const m = crs.curriculum.find(x => x.id === mId);
+                            if (m) {
+                                const t = m.lessons.find(x => x.id === tId);
+                                if (t) {
+                                    t.title = newTitle.trim();
+                                    LMSStorage.updateCourse("course-1", { curriculum: crs.curriculum });
+                                    LMSStorage.showToast("Topic updated successfully!", "success");
+                                    renderSyllabusExplorer();
+                                }
+                            }
+                        }
+                    });
+                });
+            }
+
+            if (syllabusSearch) {
+                syllabusSearch.addEventListener("input", renderSyllabusExplorer);
+            }
+
+            if (collapseAllBtn) {
+                collapseAllBtn.addEventListener("click", () => {
+                    document.querySelectorAll(".syllabus-mod-body").forEach(b => b.classList.add("d-none"));
+                    document.querySelectorAll(".toggle-icon").forEach(i => i.textContent = "▼");
+                });
+            }
+
+            if (expandAllBtn) {
+                expandAllBtn.addEventListener("click", () => {
+                    document.querySelectorAll(".syllabus-mod-body").forEach(b => b.classList.remove("d-none"));
+                    document.querySelectorAll(".toggle-icon").forEach(i => i.textContent = "▲");
+                });
+            }
+
+            // Initial render
+            renderCoursesTable();
+            renderSyllabusExplorer();
+
+            // Real-time Event-Driven Synchronization
+            if (typeof AppStorage !== "undefined") {
+                AppStorage.onDataChange(() => {
+                    renderCoursesTable();
+                    renderSyllabusExplorer();
+                });
+            }
+        });
+    </script>
+
+<script src="../JS/support-widget.js"></script></body>
+
+</html>

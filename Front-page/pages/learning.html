@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Studio | LearnX</title>
+
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- LearnX Stylesheets -->
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/lms.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+
+    <style>
+        .learning-tab-nav {
+            display: flex;
+            gap: 15px;
+            border-bottom: 1px solid var(--theme-border, #e2e8f0);
+            margin-bottom: 20px;
+        }
+        .learning-tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 16px;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--theme-muted, #64748b);
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+        }
+        .learning-tab-btn.active {
+            color: var(--theme-primary, #6366f1);
+            border-bottom-color: var(--theme-primary, #6366f1);
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="../home.html" class="brand">
+                <img src="../assets/Images/Project logo.png" alt="LearnX Logo" onerror="this.outerHTML='<span style=\'font-size:24px;font-weight:800;color:var(--theme-primary);\'>Learn<span style=\'color:var(--theme-text);\'>X</span></span>'">
+            </a>
+
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-primary" id="currentCourseBadge">Course</span>
+                <span class="text-muted small d-none d-md-inline" id="courseProgressText">0% Completed</span>
+            </div>
+
+            <div class="nav-buttons d-flex align-items-center gap-2">
+                <button id="themeToggleBtn" class="theme-toggle-btn" type="button" style="padding: 6px 14px; font-size: 13px;">
+                    🎨 Themes
+                </button>
+                <a href="student-dashboard.html" class="lms-btn lms-btn-outline lms-btn-sm">Dashboard</a>
+                <a href="courses.html" class="lms-btn lms-btn-outline lms-btn-sm">All Courses</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- LEARNING STUDIO LAYOUT -->
+    <main class="lms-learning-layout">
+
+        <!-- Left: Video Player & Lecture Notes -->
+        <div class="lms-video-area">
+            
+            <!-- Topic-specific video resources. Each button opens a search for this exact syllabus topic. -->
+            <section class="lms-card p-4 mb-3" id="topicVideoPanel" aria-live="polite">
+                <div class="d-flex align-items-start gap-3 flex-wrap">
+                    <div class="rounded-3 bg-danger-subtle text-danger p-3 fs-3"><i class="bi bi-youtube"></i></div>
+                    <div class="flex-grow-1">
+                        <h3 class="h5 fw-bold mb-1" id="topicVideoTitle">Topic video lessons</h3>
+                        <p class="text-muted mb-3" id="topicVideoDescription">Choose a video lesson for the current syllabus topic.</p>
+                        <a id="topicVideoLink" class="lms-btn lms-btn-primary lms-btn-sm" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">Watch topic videos <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+                        <a id="topicDocsLink" class="lms-btn lms-btn-outline lms-btn-sm ms-2" href="https://developer.mozilla.org" target="_blank" rel="noopener noreferrer">Read documentation <i class="bi bi-book ms-1"></i></a>
+                        <small class="d-block text-muted mt-2">Video results are topic-specific YouTube search links, not verified endorsements of a particular creator or video.</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Video Player Controls / Action Bar -->
+            <div class="lms-card p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                    <div>
+                        <span class="text-primary small fw-bold" id="currentModuleTitle">Module 1</span>
+                        <h2 class="fw-bold fs-4 mb-1" id="currentLessonTitle">Lesson 1: Introduction</h2>
+                        <span class="text-muted small" id="currentLessonDuration">⏱️ 20 mins</span>
+                    </div>
+
+                    <!-- Mark as completed & Navigation -->
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <button type="button" class="lms-btn lms-btn-outline lms-btn-sm" id="prevLessonBtn">
+                            ⏮ Previous
+                        </button>
+
+                        <button type="button" class="lms-btn lms-btn-outline lms-btn-sm" id="toggleCompleteBtn">
+                            <i class="bi bi-circle"></i> Mark Complete
+                        </button>
+
+                        <button type="button" class="lms-btn lms-btn-primary lms-btn-sm" id="nextLessonBtn">
+                            Next ⏭
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 100% Certificate Alert Banner (Hidden by default) -->
+                <div id="certificateAlertBanner" class="alert alert-success d-flex align-items-center justify-content-between p-3 my-3 rounded-3" style="display: none !important;">
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="fs-2">🏆</span>
+                        <div>
+                            <h6 class="fw-bold mb-0">Course Completed! Congratulations!</h6>
+                            <small>You have successfully completed 100% of this course.</small>
+                        </div>
+                    </div>
+                    <a href="certificate.html" id="viewCertificateBtn" class="lms-btn lms-btn-success lms-btn-sm text-nowrap">
+                        Claim Certificate →
+                    </a>
+                </div>
+
+                <!-- Tabs: Overview, Notes, Resources, Quiz -->
+                <div class="learning-tab-nav">
+                    <button type="button" class="learning-tab-btn active" data-tab="tab-overview">Overview &amp; Summary</button>
+                    <button type="button" class="learning-tab-btn" data-tab="tab-study-notes">Lesson Notes</button>
+                    <button type="button" class="learning-tab-btn" data-tab="tab-notes">Personal Notes</button>
+                    <button type="button" class="learning-tab-btn" data-tab="tab-resources">Resources &amp; Code</button>
+                    <button type="button" class="learning-tab-btn" data-tab="tab-assignments">Topic Assignments <span class="badge bg-primary ms-1" id="topicAssignmentCount">50</span></button>
+                    <button type="button" class="learning-tab-btn" data-tab="tab-quiz" id="quizTabBtn">📝 Topic Quiz</button>
+                </div>
+
+                <div id="tab-overview" class="learning-tab-content">
+                    <h5 class="fw-bold mb-2">Lesson Highlights</h5>
+                    <p class="text-muted" id="lessonSummaryText" style="line-height: 1.7;">
+                        Loading lesson overview...
+                    </p>
+                    <div class="p-3 bg-light rounded mt-3">
+                        <h6 class="fw-bold mb-1">Key Takeaways:</h6>
+                        <ul class="mb-0 text-muted small ps-3" id="lessonTakeawaysList">
+                            <li>Understand core concepts and architectural blueprints.</li>
+                            <li>Write clean, semantic, and well-structured code.</li>
+                            <li>Practice sample exercises before moving to the next module.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="tab-study-notes" class="learning-tab-content" style="display: none;">
+                    <div id="lessonStudyNotes"></div>
+                </div>
+
+                <div id="tab-notes" class="learning-tab-content" style="display: none;">
+                    <h5 class="fw-bold mb-2">Study Notes (Saved Locally)</h5>
+                    <textarea id="studentLessonNotes" class="form-control mb-3" rows="5" placeholder="Write your own study notes for this lecture here..."></textarea>
+                    <button type="button" class="lms-btn lms-btn-primary lms-btn-sm" id="saveNotesBtn">Save Notes</button>
+                    <span id="notesSavedFeedback" class="text-success small ms-2" style="display: none;">✓ Notes saved!</span>
+                </div>
+
+                <div id="tab-resources" class="learning-tab-content" style="display: none;">
+                    <h5 class="fw-bold mb-2">Downloadable Resources</h5>
+                    <div class="d-flex flex-column gap-2">
+                        <div class="d-flex justify-content-between align-items-center p-2 border rounded">
+                            <span>📄 Lecture Slides (PDF)</span>
+                            <button type="button" class="lms-btn lms-btn-outline lms-btn-sm" onclick="LMSStorage.showToast('Downloaded lecture slides!', 'info')">Download</button>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center p-2 border rounded">
+                            <span>💻 Starter Code &amp; Solutions (.zip)</span>
+                            <button type="button" class="lms-btn lms-btn-outline lms-btn-sm" onclick="LMSStorage.showToast('Downloaded starter code archive!', 'info')">Download</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-assignments" class="learning-tab-content" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                        <div><h4 class="fw-bold mb-1">Practice assignments for this topic</h4><p class="text-muted small mb-0">50 topic-specific practice tasks. Submit your written solution or describe the files you completed.</p></div>
+                        <span class="badge bg-primary-subtle text-primary" id="assignmentPageLabel">Showing 1–10 of 50</span>
+                    </div>
+                    <div id="topicAssignmentsList" class="d-flex flex-column gap-3"></div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <button type="button" class="lms-btn lms-btn-outline lms-btn-sm" id="prevAssignmentPage" disabled>Previous 10</button>
+                        <button type="button" class="lms-btn lms-btn-primary lms-btn-sm" id="nextAssignmentPage">Next 10</button>
+                    </div>
+                </div>
+
+                <div id="tab-quiz" class="learning-tab-content" style="display: none;">
+                    <div id="courseQuizContainer"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Right: Course Curriculum & Lesson List Sidebar -->
+        <aside class="lms-syllabus-sidebar">
+            <div class="lms-syllabus-header">
+                <h3 id="sidebarCourseTitle">Course Content</h3>
+                <div class="lms-progress-wrap">
+                    <div class="lms-progress-label">
+                        <span>Progress</span>
+                        <span id="sidebarProgressPercent">0%</span>
+                    </div>
+                    <div class="lms-progress-bar">
+                        <div class="lms-progress-fill" id="sidebarProgressBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lms-syllabus-list" id="sidebarSyllabusList">
+                <!-- Injected via JavaScript from data.js -->
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- THEME PANEL -->
+    <div class="theme-overlay" id="themeOverlay"></div>
+    <div class="theme-panel" id="themePanel" role="dialog" aria-modal="true">
+        <div class="theme-panel-header">
+            <div>
+                <span class="theme-panel-label">INTERFACE</span>
+                <h2>Theme Settings</h2>
+            </div>
+            <button id="closeThemePanel" type="button">✕</button>
+        </div>
+        <h3>Select Theme</h3>
+        <div class="theme-options">
+            <button type="button" class="theme-option" data-theme-choice="light">☀️ Light</button>
+            <button type="button" class="theme-option" data-theme-choice="dark">🌙 Dark</button>
+            <button type="button" class="theme-option" data-theme-choice="purple">🔮 Purple</button>
+            <button type="button" class="theme-option" data-theme-choice="ocean">🌊 Ocean</button>
+            <button type="button" class="theme-option" data-theme-choice="forest">🌲 Forest</button>
+            <button type="button" class="theme-option" data-theme-choice="rose">🌹 Rose</button>
+            <button type="button" class="theme-option" data-theme-choice="sunset">🌅 Sunset</button>
+            <button type="button" class="theme-option" data-theme-choice="midnight">🌌 Midnight</button>
+            <button type="button" class="theme-option" data-theme-choice="lavender">🪻 Lavender</button>
+            <button type="button" class="theme-option" data-theme-choice="mint">🍃 Mint</button>
+            <button type="button" class="theme-option" data-theme-choice="gold">⭐ Gold</button>
+            <button type="button" class="theme-option" data-theme-choice="neon">⚡ Neon</button>
+        </div>
+        <button type="button" id="resetTheme" class="reset-theme-btn">Reset Default</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/data.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/theme.js"></script>
+    <script src="../JS/jquery.js"></script>
+    <script src="../JS/apis.js"></script>
+    <script src="../JS/learning-content.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseId = urlParams.get("course") || "course-1";
+            const course = LMSStorage.getCourseById(courseId);
+
+            if (!course) {
+                window.location.href = "courses.html";
+                return;
+            }
+
+            // Learning is available only after an explicit enrollment action.
+            const activeStudent = LMSStorage.getCurrentUser();
+            if (!activeStudent || activeStudent.role !== "student") return;
+            if (!LMSStorage.isEnrolled(course.id, activeStudent.id)) {
+                LMSStorage.showToast("Please enroll in this course before starting lessons.", "info");
+                window.location.href = `course-details.html?id=${encodeURIComponent(course.id)}`;
+                return;
+            }
+
+            // Flatten all lessons for easy previous/next navigation
+            const allLessons = [];
+            if (course.curriculum) {
+                course.curriculum.forEach(mod => {
+                    if (mod.lessons) {
+                        mod.lessons.forEach(l => {
+                            allLessons.push({
+                                ...l,
+                                moduleTitle: mod.title
+                            });
+                        });
+                    }
+                });
+            }
+
+            if (allLessons.length === 0) {
+                alert("No lessons found for this course.");
+                return;
+            }
+
+            let currentLessonIndex = 0;
+            let lessonSessionStartedAt = Date.now();
+            // Check if lesson param specified
+            const reqLessonId = urlParams.get("lesson");
+            if (reqLessonId) {
+                const foundIdx = allLessons.findIndex(l => l.id === reqLessonId);
+                if (foundIdx !== -1) currentLessonIndex = foundIdx;
+            }
+
+            // DOM Elements
+            const currentCourseBadge = document.getElementById("currentCourseBadge");
+            const courseProgressText = document.getElementById("courseProgressText");
+            const sidebarCourseTitle = document.getElementById("sidebarCourseTitle");
+            const currentModuleTitle = document.getElementById("currentModuleTitle");
+            const currentLessonTitle = document.getElementById("currentLessonTitle");
+            const currentLessonDuration = document.getElementById("currentLessonDuration");
+            const lessonSummaryText = document.getElementById("lessonSummaryText");
+            const toggleCompleteBtn = document.getElementById("toggleCompleteBtn");
+            const prevLessonBtn = document.getElementById("prevLessonBtn");
+            const nextLessonBtn = document.getElementById("nextLessonBtn");
+            const sidebarProgressBar = document.getElementById("sidebarProgressBar");
+            const sidebarProgressPercent = document.getElementById("sidebarProgressPercent");
+            const sidebarSyllabusList = document.getElementById("sidebarSyllabusList");
+            const certificateAlertBanner = document.getElementById("certificateAlertBanner");
+            const viewCertificateBtn = document.getElementById("viewCertificateBtn");
+            const studentLessonNotes = document.getElementById("studentLessonNotes");
+            const saveNotesBtn = document.getElementById("saveNotesBtn");
+            const notesSavedFeedback = document.getElementById("notesSavedFeedback");
+            const lessonStudyNotes = document.getElementById("lessonStudyNotes");
+            const topicVideoTitle = document.getElementById("topicVideoTitle");
+            const topicVideoDescription = document.getElementById("topicVideoDescription");
+            const topicVideoLink = document.getElementById("topicVideoLink");
+            const topicDocsLink = document.getElementById("topicDocsLink");
+            const topicAssignmentsList = document.getElementById("topicAssignmentsList");
+            const assignmentPageLabel = document.getElementById("assignmentPageLabel");
+            const prevAssignmentPage = document.getElementById("prevAssignmentPage");
+            const nextAssignmentPage = document.getElementById("nextAssignmentPage");
+            let assignmentPage = 0;
+            let currentTopicAssignments = [];
+            let currentTopicQuiz = null;
+
+            function escapeHTML(value) {
+                return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;", "'":"&#39;"}[ch]));
+            }
+
+            currentCourseBadge.textContent = course.title;
+            sidebarCourseTitle.textContent = course.title;
+
+            function updateUI() {
+                const currentLesson = allLessons[currentLessonIndex];
+                const completedIds = LMSStorage.getCompletedLessonIds();
+                const isCompleted = completedIds.includes(currentLesson.id);
+
+                // Update Video Player Source
+                const videoPlayer = document.getElementById("videoPlayerFrame");
+                if (videoPlayer) {
+                    if (currentLesson.videoUrl) {
+                        if (!videoPlayer.src.includes(currentLesson.videoUrl)) videoPlayer.src = currentLesson.videoUrl;
+                        videoPlayer.style.display = "block";
+                    } else {
+                        videoPlayer.removeAttribute("src");
+                        videoPlayer.style.display = "none";
+                        const videoPlaceholder = document.getElementById("videoLessonPlaceholder");
+                        if (videoPlaceholder) videoPlaceholder.remove();
+                        const placeholder = document.createElement("div");
+                        placeholder.id = "videoLessonPlaceholder";
+                        placeholder.className = "d-flex align-items-center justify-content-center text-center p-5 bg-light rounded";
+                        placeholder.innerHTML = `<div><div class="fs-1 mb-2">📘</div><h5 class="fw-bold">Self-paced topic</h5><p class="text-muted mb-0">Use the lesson notes and practice activities for this syllabus topic.</p></div>`;
+                        videoPlayer.insertAdjacentElement("afterend", placeholder);
+                    }
+                }
+
+                // Update Lesson Header
+                currentModuleTitle.textContent = currentLesson.moduleTitle;
+                currentLessonTitle.textContent = currentLesson.title;
+                currentLessonDuration.textContent = `⏱️ ${currentLesson.duration}`;
+                const topicContent = LearnXLearningContent.buildContent(currentLesson, currentLesson.moduleTitle);
+                lessonSummaryText.textContent = topicContent.definition;
+                topicVideoTitle.textContent = `Video lessons: ${currentLesson.title}`;
+                topicVideoDescription.textContent = `Open topic-specific video results for “${currentLesson.title}” from ${currentLesson.moduleTitle}.`;
+                topicVideoLink.href = topicContent.videoUrl;
+                topicDocsLink.href = topicContent.docsUrl;
+                lessonStudyNotes.innerHTML = `
+                    <div class="mb-3"><h4 class="fw-bold mb-2">${escapeHTML(currentLesson.title)} — Study Notes</h4><p class="text-muted">${escapeHTML(topicContent.definition)}</p></div>
+                    <div class="p-3 rounded-3 bg-light mb-3"><h5 class="fw-bold">Key concepts</h5><ul class="mb-0">${topicContent.points.map(point => `<li class="mb-2">${escapeHTML(point)}</li>`).join("")}</ul></div>
+                    <div class="mb-3"><h5 class="fw-bold">Example / walkthrough</h5><pre class="p-3 rounded-3 bg-dark text-light" style="white-space:pre-wrap;overflow:auto;"><code>${escapeHTML(topicContent.example)}</code></pre></div>
+                    <div class="p-3 rounded-3 border mb-3"><h5 class="fw-bold">Practice activity</h5><p class="mb-2">${escapeHTML(topicContent.practice)}</p><strong>Self-check:</strong> ${escapeHTML(topicContent.check)}</div>
+                    <p class="small text-muted mb-0">These notes are learning material for this syllabus topic. Use the Personal Notes tab to save your own notes.</p>`;
+
+                // Notes load
+                const savedNotes = localStorage.getItem(`learnx_notes_${currentLesson.id}`) || "";
+                studentLessonNotes.value = savedNotes;
+
+                // Toggle complete button state
+                if (isCompleted) {
+                    toggleCompleteBtn.className = "lms-btn lms-btn-success lms-btn-sm";
+                    toggleCompleteBtn.innerHTML = `<i class="bi bi-check-circle-fill"></i> Completed`;
+                } else {
+                    toggleCompleteBtn.className = "lms-btn lms-btn-outline lms-btn-sm";
+                    toggleCompleteBtn.innerHTML = `<i class="bi bi-circle"></i> Mark Complete`;
+                }
+
+                // Prev/Next buttons
+                prevLessonBtn.disabled = currentLessonIndex === 0;
+                nextLessonBtn.disabled = currentLessonIndex === allLessons.length - 1;
+
+                // Progress calculation
+                const courseProg = LMSStorage.getCourseProgress(course.id);
+                sidebarProgressBar.style.width = `${courseProg.percentage}%`;
+                sidebarProgressPercent.textContent = `${courseProg.percentage}% (${courseProg.completedCount}/${courseProg.totalCount})`;
+                courseProgressText.textContent = `${courseProg.percentage}% Completed`;
+
+                // Certificate banner if 100%
+                if (courseProg.percentage === 100) {
+                    certificateAlertBanner.style.setProperty("display", "flex", "important");
+                    viewCertificateBtn.href = `certificate.html?course=${course.id}`;
+                } else {
+                    certificateAlertBanner.style.setProperty("display", "none", "important");
+                }
+
+                // Render Sidebar Syllabus
+                sidebarSyllabusList.innerHTML = course.curriculum.map(mod => {
+                    const modLessons = mod.lessons.map(l => {
+                        const lCompleted = completedIds.includes(l.id);
+                        const lActive = l.id === currentLesson.id;
+                        return `
+                            <div class="lms-lesson-item ${lActive ? 'active' : ''}" data-lesson-id="${l.id}">
+                                <span class="lms-lesson-check ${lCompleted ? 'completed' : ''}">
+                                    ${lCompleted ? '✓' : ''}
+                                </span>
+                                <div style="flex: 1;">
+                                    <div>${l.title}</div>
+                                    <small class="text-muted">${l.duration}</small>
+                                </div>
+                            </div>
+                        `;
+                    }).join("");
+
+                    return `
+                        <div class="lms-syllabus-module-title">${mod.title}</div>
+                        ${modLessons}
+                    `;
+                }).join("");
+
+                // Click event on sidebar lesson items
+                sidebarSyllabusList.querySelectorAll(".lms-lesson-item").forEach(item => {
+                    item.addEventListener("click", function () {
+                        const targetId = this.getAttribute("data-lesson-id");
+                        const targetIdx = allLessons.findIndex(l => l.id === targetId);
+                        if (targetIdx !== -1) {
+                            currentLessonIndex = targetIdx;
+                            lessonSessionStartedAt = Date.now();
+                            updateUI();
+                        }
+                    });
+                });
+            }
+
+            // Event Listeners
+            toggleCompleteBtn.addEventListener("click", function () {
+                const currentLesson = allLessons[currentLessonIndex];
+                const completedIds = LMSStorage.getCompletedLessonIds();
+                const isCurrentlyCompleted = completedIds.includes(currentLesson.id);
+
+                const elapsedMinutes = Math.max(0, (Date.now() - lessonSessionStartedAt) / 60000);
+                LMSStorage.markLessonCompleted(currentLesson.id, !isCurrentlyCompleted, course.id, elapsedMinutes);
+                lessonSessionStartedAt = Date.now();
+                
+                if (!isCurrentlyCompleted) {
+                    LMSStorage.showToast("Lesson marked as completed! Progress updated.", "success");
+                    // Auto-advance to next lesson if available
+                    if (currentLessonIndex < allLessons.length - 1) {
+                        currentLessonIndex++;
+                        lessonSessionStartedAt = Date.now();
+                    }
+                } else {
+                    LMSStorage.showToast("Lesson marked as incomplete.", "info");
+                }
+                updateUI();
+            });
+
+            prevLessonBtn.addEventListener("click", function () {
+                if (currentLessonIndex > 0) {
+                    currentLessonIndex--;
+                    lessonSessionStartedAt = Date.now();
+                    updateUI();
+                }
+            });
+
+            nextLessonBtn.addEventListener("click", function () {
+                if (currentLessonIndex < allLessons.length - 1) {
+                    currentLessonIndex++;
+                    lessonSessionStartedAt = Date.now();
+                    updateUI();
+                }
+            });
+
+            // Tabs switching
+            document.querySelectorAll(".learning-tab-btn").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    document.querySelectorAll(".learning-tab-btn").forEach(b => b.classList.remove("active"));
+                    document.querySelectorAll(".learning-tab-content").forEach(c => c.style.display = "none");
+                    this.classList.add("active");
+                    const targetId = this.getAttribute("data-tab");
+                    const targetContent = document.getElementById(targetId);
+                    if (targetContent) targetContent.style.display = "block";
+                    if (targetId === "tab-quiz") renderCourseQuiz();
+                    if (targetId === "tab-assignments") renderTopicAssignments();
+                });
+            });
+
+            // Notes save
+            saveNotesBtn.addEventListener("click", function () {
+                const currentLesson = allLessons[currentLessonIndex];
+                localStorage.setItem(`learnx_notes_${currentLesson.id}`, studentLessonNotes.value);
+                notesSavedFeedback.style.display = "inline";
+                setTimeout(() => {
+                    notesSavedFeedback.style.display = "none";
+                }, 2000);
+            });
+
+            // ----------------- Topic assignments -----------------
+            function renderTopicAssignments() {
+                const currentLesson = allLessons[currentLessonIndex];
+                currentTopicAssignments = LearnXLearningContent.getAssignments(currentLesson, currentLesson.moduleTitle);
+                document.getElementById("topicAssignmentCount").textContent = currentTopicAssignments.length;
+                const start = assignmentPage * 10;
+                const pageItems = currentTopicAssignments.slice(start, start + 10);
+                assignmentPageLabel.textContent = `Showing ${start + 1}–${Math.min(start + 10, currentTopicAssignments.length)} of ${currentTopicAssignments.length}`;
+                prevAssignmentPage.disabled = assignmentPage === 0;
+                nextAssignmentPage.disabled = start + 10 >= currentTopicAssignments.length;
+                topicAssignmentsList.innerHTML = pageItems.map(task => {
+                    const submitted = LearnXLearningContent.getSubmission(activeStudent.id, currentLesson.id, task.id);
+                    return `<article class="border rounded-3 p-3 bg-white">
+                        <div class="d-flex justify-content-between align-items-start gap-2 flex-wrap"><div><span class="badge bg-light text-dark me-2">Task ${task.number}/50</span><span class="badge bg-info-subtle text-info-emphasis">${task.difficulty}</span><h5 class="h6 fw-bold mt-2 mb-2">${escapeHTML(task.title)}</h5></div><span class="badge ${submitted ? 'bg-success' : 'bg-warning text-dark'}">${submitted ? 'Submitted' : 'Not submitted'}</span></div>
+                        <p class="mb-2">${escapeHTML(task.instructions)}</p><p class="small text-muted mb-2"><strong>Deliverable:</strong> ${escapeHTML(task.deliverable)}</p>
+                        <label class="form-label small fw-bold" for="answer-${task.id}">Your solution / submission notes</label>
+                        <textarea class="form-control mb-2 topic-assignment-answer" id="answer-${task.id}" rows="3" placeholder="Describe your solution, paste a short code snippet, or list the files you completed...">${escapeHTML(submitted?.answer || '')}</textarea>
+                        <button type="button" class="lms-btn lms-btn-primary lms-btn-sm submit-topic-assignment" data-task-id="${task.id}" ${submitted ? 'disabled' : ''}>${submitted ? 'Submitted' : 'Submit assignment'}</button>
+                        ${submitted ? `<small class="text-success ms-2">Submitted ${new Date(submitted.submittedAt).toLocaleString()}</small>` : ''}
+                    </article>`;
+                }).join("");
+                topicAssignmentsList.querySelectorAll(".submit-topic-assignment").forEach(button => button.addEventListener("click", () => {
+                    const task = currentTopicAssignments.find(item => item.id === button.dataset.taskId);
+                    const answer = document.getElementById(`answer-${task.id}`).value.trim();
+                    if (answer.length < 10) { LMSStorage.showToast("Please add at least 10 characters describing your solution.", "info"); return; }
+                    LearnXLearningContent.saveSubmission(activeStudent.id, currentLesson.id, task, answer);
+                    LMSStorage.showToast("Topic assignment submitted and saved on this browser.", "success");
+                    renderTopicAssignments();
+                }));
+            }
+            prevAssignmentPage.addEventListener("click", () => { if (assignmentPage > 0) { assignmentPage--; renderTopicAssignments(); } });
+            nextAssignmentPage.addEventListener("click", () => { if ((assignmentPage + 1) * 10 < currentTopicAssignments.length) { assignmentPage++; renderTopicAssignments(); } });
+
+            // ----------------- Topic quiz (five questions for every syllabus topic) -----------------
+            function renderCourseQuiz() {
+                const container = document.getElementById("courseQuizContainer");
+                const currentLesson = allLessons[currentLessonIndex];
+                currentTopicQuiz = LearnXLearningContent.buildQuiz(currentLesson, currentLesson.moduleTitle);
+                const previous = LearnXLearningContent.getLatestQuizAttempt(activeStudent.id, currentLesson.id);
+                const previousBanner = previous ? `<div class="alert alert-info"><strong>Latest attempt:</strong> ${previous.score}/${previous.total} (${previous.percentage}%) · ${new Date(previous.attemptedAt).toLocaleString()}</div>` : "";
+                container.innerHTML = `${previousBanner}<div class="mb-3"><h4 class="fw-bold">${escapeHTML(currentTopicQuiz.title)}</h4><p class="text-muted small">${escapeHTML(currentTopicQuiz.description)}</p><span class="badge bg-primary">5 questions · Pass mark 60%</span></div>
+                    <form id="topicQuizForm"><div class="d-flex flex-column gap-3">${currentTopicQuiz.questions.map((q, index) => `<section class="border rounded-3 p-3"><h6 class="fw-bold">${index + 1}. ${escapeHTML(q.question)}</h6>${q.options.map((option, oi) => `<label class="d-flex align-items-start gap-2 p-2 rounded"><input class="form-check-input mt-1" type="radio" name="${q.id}" value="${oi}" required><span>${escapeHTML(option)}</span></label>`).join("")}<div id="quiz-feedback-${index}" class="small mt-2" hidden></div></section>`).join("")}</div><button class="lms-btn lms-btn-primary mt-3" type="submit">Submit topic quiz</button></form>`;
+                document.getElementById("topicQuizForm").addEventListener("submit", event => {
+                    event.preventDefault();
+                    const form = event.currentTarget;
+                    let score = 0;
+                    const answers = {};
+                    currentTopicQuiz.questions.forEach((q, index) => {
+                        const selected = form.querySelector(`input[name="${q.id}"]:checked`);
+                        const chosen = selected ? Number(selected.value) : -1;
+                        answers[q.id] = chosen;
+                        const correct = chosen === q.answer;
+                        if (correct) score++;
+                        const feedback = document.getElementById(`quiz-feedback-${index}`);
+                        feedback.hidden = false;
+                        feedback.className = `small mt-2 p-2 rounded ${correct ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'}`;
+                        feedback.textContent = `${correct ? 'Correct. ' : `Review this one. Correct answer: ${q.options[q.answer]}. `}${q.explanation}`;
+                    });
+                    const result = LearnXLearningContent.saveQuizAttempt(activeStudent.id, currentLesson.id, currentTopicQuiz, answers, score);
+                    const old = document.getElementById("topicQuizResult");
+                    if (old) old.remove();
+                    const resultBox = document.createElement("div");
+                    resultBox.id = "topicQuizResult";
+                    resultBox.className = `alert ${result.percentage >= 60 ? 'alert-success' : 'alert-warning'} mt-3`;
+                    resultBox.innerHTML = `<strong>Your score: ${result.score}/${result.total} (${result.percentage}%).</strong> ${result.percentage >= 60 ? 'You passed this topic quiz.' : 'Review the lesson notes and try again.'}`;
+                    form.appendChild(resultBox);
+                    LMSStorage.showToast(`Topic quiz completed: ${result.percentage}%`, result.percentage >= 60 ? "success" : "info");
+                });
+            }
+
+            // Render assignment bank whenever topic changes; quiz is rendered when its tab is opened.
+            // Refresh the topic bank after lesson navigation.
+            const navigationButtons = [prevLessonBtn, nextLessonBtn];
+            navigationButtons.forEach(button => button.addEventListener("click", () => { assignmentPage = 0; setTimeout(renderTopicAssignments, 0); }));
+            sidebarSyllabusList.addEventListener("click", () => { assignmentPage = 0; setTimeout(renderTopicAssignments, 0); });
+
+            // Initial render
+            updateUI();
+            renderTopicAssignments();
+        });
+    </script>
+
+</body>
+
+</html>
