@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Course - LearnX</title>
+    <link rel="stylesheet" href="../../CSS/admin.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="logo">Learn<span>X</span></div>
+        <h3>Admin Panel</h3>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="students.html">Manage Students</a>
+        <a href="courses.html">Manage Courses</a>
+        <a href="add-course.html" class="active">Add Course</a>
+
+        <h3>Teacher</h3>
+        <a href="teacher/dashboard.html">Teacher Dashboard</a>
+        <a href="teacher/courses.html">Teacher Courses</a>
+        <a href="teacher/add-lesson.html">Add Lesson</a>
+        <a href="teacher/performance.html">Performance</a>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <h1>Add New Course</h1>
+            <div class="user-info">Admin Panel</div>
+        </div>
+
+        <section class="section">
+
+            <form>
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Course Title</label>
+                        <input type="text" placeholder="Enter course title">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Instructor Name</label>
+                        <input type="text" placeholder="Enter instructor name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course Category</label>
+                        <select>
+                            <option>Select Category</option>
+                            <option>Web Development</option>
+                            <option>Programming</option>
+                            <option>Data Science</option>
+                            <option>Database</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course Duration</label>
+                        <input type="text" placeholder="Example: 8 Weeks">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course Price</label>
+                        <input type="number" placeholder="Enter course price">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course Level</label>
+                        <select>
+                            <option>Select Level</option>
+                            <option>Beginner</option>
+                            <option>Intermediate</option>
+                            <option>Advanced</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Course Description</label>
+                        <textarea placeholder="Write course description"></textarea>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Course Image</label>
+                        <input type="file">
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Course</button>
+                    <a href="courses.html" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+
+        </section>
+
+    </main>
+</div>
+
+    <script src="../../JS/learnx.js"></script>
+</body>
+</html>
