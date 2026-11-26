@@ -1,5 +1,8 @@
 /* LearnX LMS API configuration.
- * Local development: keep localhost:3000.
- * Production: replace with your Railway API domain, e.g. https://learnx-api.up.railway.app
+ * Local development: http://localhost:3000
+ * Production: Render API
  */
-window.LEARNX_API_BASE_URL = window.LEARNX_API_BASE_URL || 'http://localhost:3000';
+
+window.LEARNX_API_BASE_URL =
+    window.LEARNX_API_BASE_URL ||
+    'https://learning-managment-system-r7l3.onrender.com';

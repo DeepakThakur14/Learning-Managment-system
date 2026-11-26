@@ -11,8 +11,9 @@
     if (getToken()) headers.Authorization = `Bearer ${getToken()}`;
     let response;
     try { response = await fetch(`${API}${path}`, { ...options, headers }); }
-    catch (e) { throw new Error(`Cannot reach LearnX API at ${API}. Start the backend locally or set the deployed Railway API URL. (${e.message})`); }
-    const body = await response.json().catch(() => ({}));
+    catch (e) {
+      throw new Error(`Cannot reach LearnX API at ${API}. Check the Render backend or start the backend locally. (${e.message})`);
+    }    const body = await response.json().catch(() => ({}));
     if (!response.ok) {
       if (response.status === 401) { setToken(''); AuthService.setCurrentUser(null); }
       throw new Error(body.error || `Request failed (${response.status}).`);
