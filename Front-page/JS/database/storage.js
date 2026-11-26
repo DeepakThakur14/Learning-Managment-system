@@ -6,7 +6,7 @@
 "use strict";
 
 const StorageKeys = {
-    INITIALIZED: "learnx_initialized_v5",
+    INITIALIZED: "learnx_initialized",
     USERS: "learnx_users",
     AUTH_USER: "learnx_auth_user",
     COURSES: "learnx_courses",
@@ -99,7 +99,7 @@ const AppStorage = {
      * @param {*} data 
      */
     emit: function (key, data) {
-        if (typeof window !== "undefined" && typeof window.dispatchEvent === "function") {
+        if (typeof window !== "undefined") {
             const event = new CustomEvent("learnx:data-changed", {
                 detail: {
                     key: key,

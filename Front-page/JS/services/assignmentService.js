@@ -33,12 +33,10 @@ const AssignmentService = {
         const assignments = this.getAllAssignments();
         const submissions = AppDB.findBy(StorageKeys.SUBMISSIONS, s => s.studentId === studentId);
 
-        // If student is not enrolled in any course, they have 0 assignments
-        if (!enrolledCourseIds || enrolledCourseIds.length === 0) {
-            return [];
-        }
-
-        const targetAssignments = assignments.filter(a => enrolledCourseIds.includes(a.courseId));
+        // Filter assignments for enrolled courses only (or all if not enrolled in any)
+        const targetAssignments = enrolledCourseIds.length > 0
+            ? assignments.filter(a => enrolledCourseIds.includes(a.courseId))
+            : assignments;
 
         return targetAssignments.map(asg => {
             const sub = submissions.find(s => s.assignmentId === asg.id);

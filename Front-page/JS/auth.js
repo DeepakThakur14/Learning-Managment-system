@@ -1,14 +1,16 @@
 /** LearnX authentication UI, role guards and navigation. */
 "use strict";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     if (window.LMSStorage) LMSStorage.init();
+    if (window.LearnXCloud) {
+        try { await LearnXCloud.restoreSession(); } catch (error) { console.warn("[LearnX] Session restore failed:", error); }
+    }
     initGlobalMobileNav();
     initNavbarAuth();
     initPasswordToggles();
     initLoginForm();
     initSignupForm();
-    initAdminBootstrapForm();
     bindLogoutButtons();
     enforcePageAccess();
     showRegistrationNotice();
@@ -27,19 +29,6 @@ function getRoleDashboard(role, inPages = true) {
 }
 function initNavbarAuth() {
     if (!window.LMSStorage) return;
-    const activeUser = LMSStorage.getCurrentUser();
-    document.querySelectorAll("a[href]").forEach(link => {
-        const href = (link.getAttribute("href") || "").toLowerCase();
-        const isAdmin = href.includes("admin-dashboard");
-        const isInstructor = href.includes("instructor-dashboard") || href.includes("instructor-courses") || href.includes("instructor-content");
-        const isStudent = href.includes("student-dashboard");
-        if ((isAdmin && (!activeUser || activeUser.role !== "admin")) ||
-            (isInstructor && (!activeUser || activeUser.role !== "instructor")) ||
-            (isStudent && (!activeUser || activeUser.role !== "student"))) {
-            const item = link.closest("li");
-            if (item) item.remove(); else link.remove();
-        }
-    });
     const user = LMSStorage.getCurrentUser();
     const nav = document.querySelector(".nav-buttons, .lms-nav-actions, .navbar .user-actions");
     if (!nav || !user || nav.querySelector(".learnx-nav-user, .lms-logout-action-btn, #logoutBtn")) return;
@@ -138,7 +127,7 @@ function initSignupForm() {
             const result = await AuthService.register({ name, email, password, role });
             if (!result.success) { showAuthMessage(result.message || "Unable to create account."); return; }
             // Registration does NOT create a session. The user must sign in explicitly.
-            sessionStorage.setItem("learnx_registration_notice", "Your account was created successfully. Please sign in.");
+            sessionStorage.setItem("learnx_registration_notice", result.message || "Your account was created successfully. Please sign in.");
             location.href = `login.html?registered=1&email=${encodeURIComponent(email)}`;
         } catch (error) { showAuthMessage(error.message || "Registration failed."); }
         finally { setFormBusy(form, false); }
@@ -157,80 +146,10 @@ function enforcePageAccess() {
     const path = location.pathname.toLowerCase();
     const page = path.split("/").pop();
     const requiredRole = page === "admin-dashboard.html" ? "admin"
-        : (page === "instructor-dashboard.html" || page === "instructor-courses.html" || page === "instructor-content.html" || page === "instructor-submissions.html") ? "instructor"
+        : (page === "instructor-dashboard.html" || page === "instructor-courses.html") ? "instructor"
         : ["student-dashboard.html", "assignments.html", "certificate.html", "certificates.html", "learning.html", "my-courses.html", "profile.html", "progress.html"].includes(page) ? "student" : null;
     if (!requiredRole) return;
     const user = LMSStorage.getCurrentUser();
     if (!user) { location.replace("login.html"); return; }
-    if (user.role !== requiredRole) {
-        const target = getRoleDashboard(user.role, true);
-        location.replace(target);
-    }
-}
-
-function initAdminBootstrapForm() {
-    const form = document.getElementById("adminBootstrapForm");
-    if (!form) return;
-    const hasAdmin = () => LMSStorage.getAllUsers().some(user => user.role === "admin");
-    const modeInput = document.getElementById("adminSetupMode");
-    const heading = document.getElementById("adminSetupHeading");
-    const description = document.getElementById("adminSetupDescription");
-    const submit = form.querySelector("[type='submit']");
-    const nameWrap = document.getElementById("adminNameWrap");
-    const toggle = document.getElementById("adminModeToggle");
-    const replaceBtn = document.getElementById("replaceAdminBtn");
-
-    function setMode(mode) {
-        modeInput.value = mode;
-        const reset = mode === "reset";
-        heading.textContent = reset ? "Reset Admin Password" : "Create First Admin";
-        description.textContent = reset
-            ? "Enter the email already registered to the administrator and choose a new password."
-            : "Create the first administrator account for this browser.";
-        nameWrap.hidden = reset;
-        form.elements.name.required = !reset;
-        submit.textContent = reset ? "Reset Admin Password" : "Create Admin Account";
-        toggle.textContent = reset ? "Create first admin instead" : "I already have an admin account";
-    }
-    setMode(hasAdmin() ? "reset" : "create");
-    toggle.addEventListener("click", () => setMode(modeInput.value === "create" ? "reset" : "create"));
-
-    if (hasAdmin()) {
-        replaceBtn.hidden = false;
-        replaceBtn.addEventListener("click", async () => {
-            if (!window.confirm("This will remove the existing administrator login on THIS browser and create a new one. Student/instructor accounts and course content will be kept. Continue?")) return;
-            const payload = {
-                name: form.elements.name.value.trim(),
-                email: form.elements.email.value.trim(),
-                password: form.elements.password.value
-            };
-            if (!payload.name || payload.name.length < 2) return showAuthMessage("Enter your full name before replacing the admin.");
-            if (payload.password !== form.elements.confirmPassword.value) return showAuthMessage("Passwords do not match.");
-            const result = await AuthService.replaceLocalAdmin(payload);
-            if (!result.success) return showAuthMessage(result.message);
-            sessionStorage.setItem("learnx_registration_notice", "New administrator account created. Please sign in.");
-            location.href = "login.html";
-        });
-    }
-
-    form.addEventListener("submit", async event => {
-        event.preventDefault();
-        const name = form.elements.name.value.trim();
-        const email = form.elements.email.value.trim();
-        const password = form.elements.password.value;
-        const confirm = form.elements.confirmPassword.value;
-        if (password !== confirm) return showAuthMessage("Passwords do not match.");
-        let result;
-        if (modeInput.value === "reset") {
-            result = await AuthService.resetAdminPassword({ email, password });
-        } else {
-            if (hasAdmin()) return showAuthMessage("An admin already exists. Switch to password reset or use Replace Admin for this local demo.");
-            result = await AuthService.bootstrapAdmin({ name, email, password });
-        }
-        if (!result.success) return showAuthMessage(result.message);
-        sessionStorage.setItem("learnx_registration_notice", modeInput.value === "reset"
-            ? "Administrator password updated. Please sign in."
-            : "Administrator account created. Please sign in.");
-        location.href = "login.html";
-    });
+    if (user.role !== requiredRole) location.replace(getRoleDashboard(user.role, true));
 }

@@ -1,34 +1,23 @@
-# LearnX LMS — Repair and Audit Summary
+# LearnX LMS - Source Audit and Applied Fixes
 
-## Active application
-The active app is `Front-page/`. The root `index.html` redirects into `Front-page/Index.html`. The folders `LearnX/`, `leaning project/`, and `LMSPROJECT(student-module).html/` are retained from the uploaded archive as older/parallel work areas; they were not merged into the active app.
+## Scope
+This package is based on the uploaded `LMS (3).zip`. The primary browser application is `Front-page/`; the backend is `backend/`.
 
-## What changed
-- Authentication no longer creates an account just because an unknown email is entered at login.
-- Login verifies the existing account password and selected role.
-- Registration supports Student and Instructor only. Admin remains a pre-provisioned demo account.
-- First launch no longer automatically logs in the first seeded student.
-- Password visibility controls have explicit positioning, click handling, accessible labels, and focus restoration.
-- Protected pages check the current session and expected role.
-- Removed hardcoded demo-student fallbacks from the main student pages.
-- Removed automatic enrollment when a student opens a lesson URL. The student must enroll first.
-- A student cannot complete a lesson without an enrollment.
-- Removed the artificial 25-minute default for completed lessons. Time is measured as elapsed time in the open lesson page session when the student marks it complete.
-- Dashboard seed activity, enrollments, completions, assignments and quizzes are empty so first-time metrics do not pretend to be actual learner actions.
-- The catalog is seeded with one `Frontend Web Development` course containing the exact 21 modules and 135 topic entries from the supplied syllabus image.
-- The syllabus course is protected from deletion and unrelated additional courses are blocked in the current single-course configuration.
-- Added a one-time migration that preserves user accounts but clears old demo course activity and removes the old active session.
-- Corrected `Signup.html` link casing and added run instructions/checklists.
+## Applied fixes
+1. Reordered `auth.js` before `mysql-bridge.js` on every Front-page HTML page where the order was reversed. The bridge replaces AuthService methods and must load after the base service.
+2. Added the missing bridge methods used by the Admin Support Desk: `listUsers`, `listSupportIssues`, `createSupportIssue`, and `updateSupportIssue`.
+3. Instructor self-registration now creates an active account rather than a pending account. On backend startup, older pending instructor accounts are activated to match this policy.
+4. New course slugs receive a unique suffix to avoid a duplicate-slug database error when a course title is reused.
+5. Root `index.html` now redirects to the actual app at `Front-page/pages/login.html`.
+6. Removed the uploaded `.env` from the deliverable and sanitized `backend/.env.example`. The uploaded archive contained live-looking database credentials in both `.env` and `.env.example`; rotate the MySQL app-user password and JWT secret before using this package.
+7. Kept the login/register/logout endpoints unthrottled as in the uploaded backend; the one-time initial-admin setup route still has a separate limit.
 
-## Demo credentials
-- Student: `ayush@learnx.edu` / `password123`
-- Instructor: `priya.sharma@learnx.edu` / `password123`
-- Admin: `admin@learnx.edu` / `password123`
+## Checks performed
+- `node --check` passed for all 31 JavaScript files in the source package after the changes.
+- Local asset reference scan found no missing local references in the primary `Front-page/` HTML pages.
+- The legacy `LearnX/` and `LMSPROJECT(student-module).html/` folders contain old/incomplete pages and unresolved references. They are retained for source preservation, but the main app should be run from `Front-page/`.
 
-## Data behavior
-- Student course count, lesson completion, progress and activity are derived from LocalStorage records and user actions.
-- Weekly learning time is recorded from the elapsed time between opening/selecting a lesson and marking it complete. It is a browser-session estimate, not verified video playback analytics.
-- LocalStorage is local to one browser profile/device. It cannot synchronize independent users across devices or provide secure production authentication.
-
-## Run
-Open `Front-page/Index.html` using VS Code Live Server. See `Front-page/README-RUN.md` for demo credentials and setup details.
+## Known limitations - not represented as completed
+- Assignment and quiz services in `Front-page/JS/services/` still use browser-side AppDB/localStorage. The current MySQL schema and API do not yet provide database-backed assignment, quiz, attempt, or submission endpoints. These records will not synchronize between devices yet.
+- Dashboard charts and some metrics are still derived from seeded/local demo data; not all dashboard KPIs are live database aggregates.
+- Browser + MySQL end-to-end testing was not possible in this static source audit. Validate login, course CRUD, support tickets and admin user provisioning on the user's local MySQL before replacing the backup.

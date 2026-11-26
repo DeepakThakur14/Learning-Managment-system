@@ -42,18 +42,11 @@ const AnalyticsService = {
             .filter(l => l.userId === studentId)
             .slice(0, 6);
 
-        const totalTopicsCount = overallProg.totalLessonsInEnrolled;
-        const completedTopicsCount = completedLessonIds.length;
-        const remainingTopicsCount = Math.max(0, totalTopicsCount - completedTopicsCount);
-
         return {
             enrolledCount: enrolledCourseIds.length,
-            completedLessonsCount: completedTopicsCount,
-            completedTopicsCount: completedTopicsCount,
-            remainingTopicsCount: remainingTopicsCount,
-            totalLessonsCount: totalTopicsCount,
-            totalTopicsCount: totalTopicsCount,
+            completedLessonsCount: completedLessonIds.length,
             overallProgressPercentage: overallProg.overallPercent,
+            totalLessonsCount: overallProg.totalLessonsInEnrolled,
             pendingAssignmentsCount: pendingCount,
             weeklyActivity: weeklyActivity,
             upcomingTasks: upcomingTasks,

@@ -89,10 +89,6 @@ const EnrollmentService = {
         return { success: true, message: `Successfully enrolled in ${course.title}!`, enrollment };
     },
 
-    enrollStudent: function (studentId, courseId) {
-        return this.enroll(studentId, courseId);
-    },
-
     /**
      * Get count of enrolled students for a specific course
      * @param {string} courseId 
