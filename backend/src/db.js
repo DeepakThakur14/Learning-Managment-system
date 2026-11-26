@@ -1,4 +1,6 @@
 const mysql = require('mysql2/promise');
+const fs = require('fs');
+const path = require('path');
 
 const pool = mysql.createPool({
   host: process.env.MYSQLHOST || process.env.DB_HOST || '127.0.0.1',
@@ -6,10 +8,18 @@ const pool = mysql.createPool({
   user: process.env.MYSQLUSER || process.env.DB_USER || 'root',
   password: process.env.MYSQLPASSWORD || process.env.DB_PASSWORD || '',
   database: process.env.MYSQLDATABASE || process.env.DB_NAME || 'learnx_lms',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-  charset: 'utf8mb4'
+  ssl: {
+    ca: fs.readFileSync(
+      path.join(__dirname, '../certs/isrgrootx1.pem'),
+      'utf8'
+    ),
+    minVersion: 'TLSv1.2'
+    },
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    charset: 'utf8mb4',
+  
 });
 
 async function initDb() {
